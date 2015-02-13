@@ -58,6 +58,23 @@ program = None
 vao = None
 vbo = None
 
+def rect(w=1.0, h=1.0):
+    data = np.zeros(4, dtype = [
+        ("position", np.float32, 3),
+        ("color", np.float32, 4),
+        ("texCoord", np.float32, 2),
+        ("normal", np.float32, 3),
+    ])
+    
+    w_half, h_half = w/2.0, h/2.0
+    
+    data['position'] = [ (-w_half, -h_half, 0), (-w_half, +h_half, 0), (+w_half, -h_half, 0), (+w_half, +h_half, 0) ]
+    data['color'] = [ (1, 0, 0, 1), (0, 1, 0, 1), (0, 0, 1, 1), (1, 1, 0, 1) ]
+    data['texCoord'] = [ (0, 0), (0, +1), (+1, 0), (+1, +1) ]
+    data['normal'] = [ (+1, 0, 0), (+1, 0, 0), (+1, 0, 0), (+1, 0, 0) ]
+    
+    return data
+
 def init(window):
     global program, vao, vbo
     
