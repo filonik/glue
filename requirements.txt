@@ -1,0 +1,4 @@
+numpy
+PyOpenGL
+cyglfw3
+six
