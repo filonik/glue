@@ -93,13 +93,11 @@ def render(window):
     program.attributes['position'] = vbo
     program.attributes['color'] = vbo
     
-    GL.glDrawArrays(GL.GL_TRIANGLE_STRIP, 0, vbo.type.dtype['position'].size)
+    GL.glDrawArrays(GL.GL_TRIANGLE_STRIP, 0, 4)
 
 def main():
     window = glfw.Window((800, 600), "Hello GLUE!")
     glfw.Context.set_current(window.context)
-    
-    info()
     
     init(window)
     
