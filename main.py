@@ -2,7 +2,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-import math
 import time
 
 import numpy as np
@@ -66,7 +65,7 @@ def render(window):
     aspect = size / np.min(size)
     
     projection = projections.ortho(-aspect[0], +aspect[0], -aspect[1], +aspect[1], -1.0, +1.0)
-    model_view = transforms.translate(0, np.sin(2*np.pi*math.fmod(time.time(), 5.0)/5.0), 0)
+    model_view = transforms.translate(0, np.sin(2*np.pi*np.fmod(time.time(), 5.0)/5.0), 0)
     
     program.uniforms['projection'] = projection
     program.uniforms['model_view'] = model_view
