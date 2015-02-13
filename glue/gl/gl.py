@@ -8,7 +8,7 @@ import six
 import OpenGL
 from OpenGL import GL
 
-from . import types, funcs
+from . import types, funcs, utilities
 
 from ..decorators import indexedproperty
 from ..flyweights import Resource
@@ -34,6 +34,9 @@ def clear_color(color):
         nth(color, 2, 0.0),
         nth(color, 3, 1.0)
     )
+
+def clear_depth(depth):
+    GL.glClearDepth(depth)
 
 def clear(mask=DEFAULT_CLEAR_MASK):
     GL.glClear(mask)

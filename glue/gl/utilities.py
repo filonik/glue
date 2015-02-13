@@ -5,12 +5,11 @@ import sys
 
 import six
 
-from . import gl
-
 def application_path():
     return os.path.dirname(os.path.realpath(sys.argv[0]))
 
 def file_extension_to_shader_type(ext):
+    from . import gl
     return {
         ".vs": gl.VertexShader, ".vert": gl.VertexShader,
         ".tc": gl.TessellationControlShader, ".tesc": gl.TessellationControlShader,
@@ -28,6 +27,8 @@ def get_shader_source(path):
         return f.read()
 
 def load_shader(path):
+    from . import gl
+    
     type, source = get_shader_type(path), get_shader_source(path)
     
     result = type()
@@ -37,6 +38,8 @@ def load_shader(path):
     return result
 
 def load_program(paths):
+    from . import gl
+    
     shaders = [load_shader(path) for path in paths]
     
     result = gl.Program()

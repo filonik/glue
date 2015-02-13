@@ -7,7 +7,7 @@ import time
 import numpy as np
 
 from glue import glfw, gl, projections, transforms
-from glue.gl import GL, utilities
+from glue.gl import GL
 
 import logging
 logging.basicConfig(filename='glue.log', level=logging.DEBUG)
@@ -41,7 +41,7 @@ vbo = None
 def init(window):
     global program, vao, vbo
     
-    program = utilities.load_program([
+    program = gl.utilities.load_program([
         'data/shader/plain.vs',
         'data/shader/plain.fs',
     ])
@@ -72,6 +72,8 @@ def render(window):
     
     program.attributes['position'] = vbo
     program.attributes['color'] = vbo
+    program.attributes['texCoord'] = vbo
+    program.attributes['normal'] = vbo
     
     GL.glDrawArrays(GL.GL_TRIANGLE_STRIP, 0, vbo.type.dtype['position'].size)
 
