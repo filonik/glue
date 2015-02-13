@@ -2,6 +2,9 @@
 
 from __future__ import absolute_import, division, print_function
 
+import math
+import time
+
 import numpy as np
 
 from glue import glfw, gl, projections, transforms
@@ -13,18 +16,18 @@ logging.basicConfig(filename='glue.log', level=logging.DEBUG)
 def rect(w=1.0, h=1.0):
     data = np.zeros(4, dtype = [
         ("position", np.float32, 3),
-        ("normal", np.float32, 3),
+        ("color", np.float32, 4),
         ("texCoord", np.float32, 2),
-        ("color", np.float32, 4)
+        ("normal", np.float32, 3),
     ])
     
     w_half, h_half = w/2.0, h/2.0
     
     data['position'] = [ (-w_half, -h_half, 0), (-w_half, +h_half, 0), (+w_half, -h_half, 0), (+w_half, +h_half, 0) ]
-    data['normal'] = [ (+1, 0, 0), (+1, 0, 0), (+1, 0, 0), (+1, 0, 0) ]
-    data['texCoord'] = [ (0, 0), (0, +1), (+1, 0), (+1, +1) ]
     data['color'] = [ (1, 0, 0, 1), (0, 1, 0, 1), (0, 0, 1, 1), (1, 1, 0, 1) ]
-
+    data['texCoord'] = [ (0, 0), (0, +1), (+1, 0), (+1, +1) ]
+    data['normal'] = [ (+1, 0, 0), (+1, 0, 0), (+1, 0, 0), (+1, 0, 0) ]
+    
     return data
 
 def info():
@@ -63,12 +66,13 @@ def render(window):
     aspect = size / np.min(size)
     
     projection = projections.ortho(-aspect[0], +aspect[0], -aspect[1], +aspect[1], -1.0, +1.0)
-    model_view = transforms.translate(0, 0, 0)
+    model_view = transforms.translate(0, np.sin(2*np.pi*math.fmod(time.time(), 5.0)/5.0), 0)
     
     program.uniforms['projection'] = projection
     program.uniforms['model_view'] = model_view
     
     program.attributes['position'] = vbo
+    program.attributes['color'] = vbo
     
     GL.glDrawArrays(GL.GL_TRIANGLE_STRIP, 0, vbo.type.dtype['position'].size)
 
@@ -87,9 +91,9 @@ def main():
         
         render(window)
         
-        window.swap_buffers()
-        
         gl.cleanup()
+        
+        window.swap_buffers()
     
     window.dispose()
 

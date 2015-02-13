@@ -9,10 +9,10 @@ def identity(n=DEFAULT_SIZE):
 
 def translate(x, y, z):
     return np.array([
-        [1, 0, 0, x],
-        [0, 1, 0, y],
-        [0, 0, 1, z],
-        [0, 0, 0, 1]
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [x, y, z, 1]
     ], dtype=np.float32)
 
 def scale(x, y, z):
@@ -25,8 +25,8 @@ def scale(x, y, z):
 
 def shear(x, y, z):
     return np.array([
-        [1, 0, x, 0],
-        [0, 1, y, 0],
-        [0, 0, 1, 0],
-        [0, 0, z, 1]
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [x, y, 1, z],
+        [0, 0, 0, 1]
     ], dtype=np.float32)
