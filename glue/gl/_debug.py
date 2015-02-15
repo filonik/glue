@@ -48,4 +48,7 @@ def mock(GL):
     GL.glUniform3uiv = debug_mock_printer()(GL.glUniform3uiv)
     GL.glUniform4uiv = debug_mock_printer()(GL.glUniform4uiv)
     
+    GL.glDrawArrays = debug_mock_printer()(GL.glDrawArrays)
+    GL.glDrawElements = debug_mock_printer()(GL.glDrawElements)
+    
     return GL

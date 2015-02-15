@@ -8,6 +8,9 @@ import six
 import OpenGL
 from OpenGL import GL
 
+#from ._debug import mock
+#GL = mock(GL)
+
 from . import types, funcs, utilities
 
 from ..utilities import nth, Unspecified, specified, getspecified

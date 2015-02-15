@@ -99,7 +99,7 @@ class Program(resources.GLResource):
     def inputs(self, key, value):
         location = self.inputs[key]
         if location != -1:
-            type = value.type.dtype[key] if isinstance(value.type.dtype, dict) else value.type.dtype
+            type = value.type.dtype[key] if isinstance(value.type.dtype, dict) else value.type
             setter = funcs.attribute_setter(type)
             setter(location, value._handle)
         else:

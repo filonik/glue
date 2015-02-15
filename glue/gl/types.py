@@ -8,9 +8,6 @@ from OpenGL import GL
 
 from ..utilities import reversedict
 
-#from ._debug import mock
-#GL = mock(GL)
-
 _gltype_suffixes = {
     GL.GL_BOOL: 'b',
     GL.GL_UNSIGNED_BYTE: 'ui8',
