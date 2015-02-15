@@ -14,6 +14,18 @@ def attrcached(attr):
         return decorated
     return decorator
 
+def decorationmethod(cls, name=None):
+    def decorator(func):
+        func_names = [name or func.__name__]
+        
+        for func_name in func_names:
+            old_func = getattr(cls, func_name, None)
+            new_func = func(old_func)
+            setattr(cls, func_name, new_func)
+        
+        return func
+    return decorator
+
 class IndexedProperty(object):
     _indexer_type = Indexer
             

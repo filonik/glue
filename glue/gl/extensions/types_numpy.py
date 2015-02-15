@@ -7,7 +7,7 @@ from OpenGL import GL
 
 import numpy as np
 
-from ..utilities import reversedict
+from ...utilities import reversedict
 
 _gltypes_to_nptypes = {
     GL.GL_BOOL: np.bool,
@@ -25,13 +25,12 @@ _gltypes_to_nptypes = {
 _nptypes_to_gltypes = reversedict(_gltypes_to_nptypes)
 
 def _gltype_tensor_extension(func):
-    from .types import GLTensorType
-    from ._types_glsl import _glsltypes_to_gltensortypes
+    from ..types import GLTensorType
     @ft.wraps(func)
     def gltype_tensor(obj):
         for nptype, gltype in _nptypes_to_gltypes.items():
             if isinstance(obj, nptype):
-                return GLTensorType(*_glsltypes_to_gltensortypes[gltype])
+                return GLTensorType(gltype, ())
         
         if isinstance(obj, np.ndarray):
             if len(obj.shape) < 3 and np.all(np.array(obj.shape) < 5) and obj.dtype.type in _nptypes_to_gltypes:
@@ -42,8 +41,8 @@ def _gltype_tensor_extension(func):
     return gltype_tensor
 
 def _gltype_array_extension(func):
-    from .types import GLArrayType
-    from .types import gltype
+    from ..types import GLArrayType
+    from ..types import gltype
     @ft.wraps(func)
     def gltype_array(obj, offset=0):
         if isinstance(obj, np.ndarray):

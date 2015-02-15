@@ -26,6 +26,21 @@ def get_shader_source(path):
     with open(os.path.join(application_path(), path), "r") as f:
         return f.read()
 
+def load_texture(path):
+    from . import gl
+    
+    import PIL.Image
+    
+    image = PIL.Image.open(os.path.join(application_path(), path))
+
+    result = gl.Texture2D()
+    
+    gl.Texture2D.bind(result)
+    
+    result.set_image(image)
+    
+    return result
+
 def load_shader(path):
     from . import gl
     

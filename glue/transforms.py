@@ -23,6 +23,9 @@ def scale(x, y, z):
         [0, 0, 0, 1]
     ], dtype=np.float32)
 
+def transform(o, t, s):
+    return np.tensordot(scale(*s), translate(*t), axes=1)
+
 def shear(x, y, z):
     return np.array([
         [1, 0, 0, 0],

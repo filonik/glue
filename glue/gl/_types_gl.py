@@ -58,7 +58,7 @@ def _gltype_tensor_extension(func):
     def gltype_tensor(obj):
         for ctype, gltype in _ctypes_to_gltypes.items():
             if isinstance(obj, ctype):
-                return GLTensorType(*_glsltypes_to_gltensortypes[gltype])
+                return GLTensorType(gltype, ())
         
         return func(obj)
     return gltype_tensor

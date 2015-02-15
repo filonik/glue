@@ -38,6 +38,13 @@ def getdefined(obj, default=None):
 def getspecified(obj, default=None):
     return obj if specified(obj) else default
 
+def hashable(obj):
+    try:
+        hash(obj)
+    except TypeError:
+        return False
+    return True
+
 def reversedict(d):
     return dict(map(reversed, six.iteritems(d)))
 

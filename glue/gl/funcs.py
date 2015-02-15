@@ -20,15 +20,15 @@ def _gltensortype_to_vertexattribpointer_func(gltensortype):
         return GL.glVertexAttribPointer
 
 _gltensortype_to_uniform_funcs = {
-    (GL.GL_INT, ()): GL.glUniform1iv,
+    (GL.GL_INT, ()): GL.glUniform1i,
     (GL.GL_INT, (2,)): GL.glUniform2iv,
     (GL.GL_INT, (3,)): GL.glUniform3iv,
     (GL.GL_INT, (4,)): GL.glUniform4iv,
-    (GL.GL_UNSIGNED_INT, ()): GL.glUniform1uiv,
+    (GL.GL_UNSIGNED_INT, ()): GL.glUniform1ui,
     (GL.GL_UNSIGNED_INT, (2,)): GL.glUniform2uiv,
     (GL.GL_UNSIGNED_INT, (3,)): GL.glUniform3uiv,
     (GL.GL_UNSIGNED_INT, (4,)): GL.glUniform4uiv,
-    (GL.GL_FLOAT, ()): GL.glUniform1fv,
+    (GL.GL_FLOAT, ()): GL.glUniform1f,
     (GL.GL_FLOAT, (2,)): GL.glUniform2fv,
     (GL.GL_FLOAT, (3,)): GL.glUniform3fv,
     (GL.GL_FLOAT, (4,)): GL.glUniform4fv,
@@ -62,7 +62,7 @@ def uniform_setter(gltype):
     if rank == 0:
         def uniform_scalar(location, value, type=None):
             assert (type is None) or (gltype == type), 'Cannot set uniform of "%s" with incompatible "%s".' % (gltype, type)
-            func(location, count, value)
+            func(location, value)
         return uniform_scalar
     elif rank == 1:
         def uniform_vector(location, value, type=None):

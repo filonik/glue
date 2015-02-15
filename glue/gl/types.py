@@ -123,7 +123,7 @@ from ._types_glsl import _gltype_tensor_extension, _gltype_array_extension
 gltype_tensor = _gltype_tensor_extension(gltype_tensor)
 gltype_array = _gltype_array_extension(gltype_array)
 
-from ._types_numpy import _gltype_tensor_extension, _gltype_array_extension
+from .extensions.types_numpy import _gltype_tensor_extension, _gltype_array_extension
 
 gltype_tensor = _gltype_tensor_extension(gltype_tensor)
 gltype_array = _gltype_array_extension(gltype_array)

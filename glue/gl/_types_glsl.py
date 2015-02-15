@@ -5,7 +5,7 @@ import functools as ft
 import OpenGL
 from OpenGL import GL
 
-from ..utilities import reversedict
+from ..utilities import hashable, reversedict
 
 _glsltensortypes_to_gltensortypes = {
     GL.GL_BOOL: (GL.GL_BOOL, ()),
@@ -96,13 +96,6 @@ _glslsamplertypes_to_gltensortypes = {
 _glsltypes_to_gltensortypes = {}
 _glsltypes_to_gltensortypes.update(_glsltensortypes_to_gltensortypes)
 _glsltypes_to_gltensortypes.update(_glslsamplertypes_to_gltensortypes)
-
-def hashable(obj):
-    try:
-        hash(obj)
-    except TypeError:
-        return False
-    return True
 
 def _gltype_tensor_extension(func):
     from .types import GLTensorType
