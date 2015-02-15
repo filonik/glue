@@ -3,8 +3,8 @@
 uniform sampler2D texture;
 
 in VertexData {
-    vec4 color;
     vec2 texCoord;
+    vec4 color;
     vec3 normal;
 } vs;
 
