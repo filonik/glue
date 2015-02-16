@@ -7,37 +7,37 @@ import weakref
 
 import six
 
-import cyglfw3 as glfw
+import cyglfw3 as GLFW
 
 from ..decorators import attrcached
 from ..flyweights import Resource
 from ..utilities import chdir, Unspecified, specified, getspecified
 
 DEFAULT_WINDOW_HINTS = {
-    glfw.DECORATED: 1,
-    glfw.FOCUSED: 1,
-    glfw.RESIZABLE: 1,
-    glfw.VISIBLE: 1,
-    glfw.FLOATING: 0,
+    GLFW.DECORATED: 1,
+    GLFW.FOCUSED: 1,
+    GLFW.RESIZABLE: 1,
+    GLFW.VISIBLE: 1,
+    GLFW.FLOATING: 0,
 }
 
 DEFAULT_CONTEXT_HINTS = {
-    glfw.CONTEXT_VERSION_MAJOR: 4,
-    glfw.CONTEXT_VERSION_MINOR: 4,
-    glfw.OPENGL_FORWARD_COMPAT: 1,
-    glfw.OPENGL_PROFILE: glfw.OPENGL_CORE_PROFILE,
+    GLFW.CONTEXT_VERSION_MAJOR: 4,
+    GLFW.CONTEXT_VERSION_MINOR: 4,
+    GLFW.OPENGL_FORWARD_COMPAT: 1,
+    GLFW.OPENGL_PROFILE: GLFW.OPENGL_CORE_PROFILE,
 }
 
 def initialize():
     with chdir():
-        if not glfw.Init():
+        if not GLFW.Init():
             raise Exception('Failed to initialise GLFW.')
         
         from ..gl import gl
         gl._set_backend('glfw')
 
 def terminate():
-    glfw.Terminate()
+    GLFW.Terminate()
 
 @cl.contextmanager  
 def initialized():  
@@ -48,13 +48,13 @@ def initialized():
         terminate()
 
 def get_primary_monitor():
-    return Monitor(handle=glfw.GetPrimaryMonitor())
+    return Monitor(handle=GLFW.GetPrimaryMonitor())
 
 def get_monitors():
-    return map(lambda handle: Monitor(handle=handle), glfw.GetMonitors())
+    return map(lambda handle: Monitor(handle=handle), GLFW.GetMonitors())
 
 def poll_events():
-    glfw.PollEvents()
+    GLFW.PollEvents()
 
 class Monitor(Resource):
     __references = dict()
@@ -65,11 +65,11 @@ class Monitor(Resource):
     
     @property
     def video_mode(self):
-        return glfw.GetVideoMode(self._handle)
+        return GLFW.GetVideoMode(self._handle)
     
     @property
     def position(self):
-        return glfw.GetMonitorPos(self._handle)
+        return GLFW.GetMonitorPos(self._handle)
     
     @property
     def size(self):
@@ -91,13 +91,13 @@ class Window(Resource):
         _hints.update(hints or {})
         
         for key, value in six.iteritems(_hints):
-            glfw.WindowHint(key, value)
+            GLFW.WindowHint(key, value)
         
-        return glfw.CreateWindow(size[0], size[1], title, cls.handle(monitor), cls.handle(share))
+        return GLFW.CreateWindow(size[0], size[1], title, cls.handle(monitor), cls.handle(share))
     
     @classmethod
     def delete_handle(cls, handle):
-        glfw.DestroyWindow(handle)
+        GLFW.DestroyWindow(handle)
     
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
@@ -109,31 +109,31 @@ class Window(Resource):
     
     @property
     def position(self):
-        return glfw.GetWindowPos(self._handle)
+        return GLFW.GetWindowPos(self._handle)
     
     @position.setter
     def position(self, value):
-        glfw.SetWindowPos(self._handle, value[0], value[1])
+        GLFW.SetWindowPos(self._handle, value[0], value[1])
     
     @property
     def size(self):
-        return glfw.GetWindowSize(self._handle)
+        return GLFW.GetWindowSize(self._handle)
     
     @size.setter
     def size(self, value):
-        glfw.SetWindowSize(self._handle, value[0], value[1])
+        GLFW.SetWindowSize(self._handle, value[0], value[1])
     
     def show(self):
-        glfw.ShowWindow(self._handle)
+        GLFW.ShowWindow(self._handle)
     
     def hide(self):
-        glfw.HideWindow(self._handle)
+        GLFW.HideWindow(self._handle)
     
     def should_close(self):
-        return glfw.WindowShouldClose(self._handle)
+        return GLFW.WindowShouldClose(self._handle)
     
     def swap_buffers(self):
-        glfw.SwapBuffers(self._handle)
+        GLFW.SwapBuffers(self._handle)
         
 class Context(Resource):
     __references = dict()
@@ -152,12 +152,12 @@ class Context(Resource):
     
     @classmethod
     def get_current(cls):
-        handle = glfw.GetCurrentContext()
+        handle = GLFW.GetCurrentContext()
         return cls(handle=handle)
     
     @classmethod
     def set_current(cls, context):
-        glfw.MakeContextCurrent(context._handle)
+        GLFW.MakeContextCurrent(context._handle)
     
     def __init__(self, *args, **kwargs):
         super(Context, self).__init__(*args, **kwargs)

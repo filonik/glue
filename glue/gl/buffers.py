@@ -36,7 +36,7 @@ class Buffer(resources.GLResource):
     
     @classmethod
     def delete_handle(cls, handle):
-        GL.glDeleteBuffers(handle)
+        GL.glDeleteBuffers(1, GL.GLuint(handle))
     
     def __init__(self, *args, **kwargs):
         super(Buffer, self).__init__(*args, **kwargs)

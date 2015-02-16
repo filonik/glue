@@ -5,6 +5,9 @@ import sys
 
 import six
 
+import OpenGL
+from OpenGL import GL
+
 def application_path():
     return os.path.dirname(os.path.realpath(sys.argv[0]))
 
@@ -66,3 +69,17 @@ def load_program(paths):
     for shader in shaders: result.detach(shader)
     
     return result
+
+def save_screenshot(path):
+    from . import gl
+    
+    import PIL.Image
+    
+    _, _, w, h = GL.glGetIntegerv(GL.GL_VIEWPORT)
+    
+    GL.glReadBuffer(GL.GL_FRONT)
+    data = GL.glReadPixels(0, 0, w, h, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE)
+    
+    image = PIL.Image.fromstring(mode="RGBA", size=(w, h), data=data)     
+    image = image.transpose(PIL.Image.FLIP_TOP_BOTTOM)
+    image.save(path, 'PNG')
