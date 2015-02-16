@@ -3,9 +3,6 @@
 layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
-uniform mat4 projection;
-uniform mat4 model_view;
-
 uniform vec2 screen_aspect = vec2(1.333, 1.0);
 uniform vec2 point_size = vec2(0.01);
 

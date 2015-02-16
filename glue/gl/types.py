@@ -41,6 +41,22 @@ class GLTensorType(collections.namedtuple('GLTensorType', ['type', 'sizes'])):
     def strides(self):
         return _gltype_stridesof(self.type, self.sizes)
     
+    @property
+    def size(self):
+        return self.sizes[0]
+    
+    @property
+    def stride(self):
+        return self.strides[0]
+    
+    @property
+    def offset(self):
+        return 0
+    
+    @property
+    def dtype(self):
+        return GLTensorType(self.type, self.sizes[1:])
+    
     __lt__ = _gltype_lt
     __eq__ = _gltype_eq
     
@@ -162,4 +178,4 @@ dmat4x2_t = gltype(GL.GL_DOUBLE_MAT4x2)
 dmat4x3_t = gltype(GL.GL_DOUBLE_MAT4x3)
 
 def array_t(dtype, size=0, offset=0):
-    return GLArrayType(size, dtype.strides[0], offset, dtype)
+    return GLArrayType(size, dtype.size*dtype.stride, offset, dtype)

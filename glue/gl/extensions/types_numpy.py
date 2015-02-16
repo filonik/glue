@@ -54,6 +54,6 @@ def _gltype_array_extension(func):
                 offsets = np.r_[0, [obj.dtype[name].itemsize for name in obj.dtype.names]].cumsum()
                 dtype = {name: gltype_array(obj[name], offset=offset) for name, offset in zip(obj.dtype.names, offsets)}
                 return GLArrayType(size, stride, offset, dtype)
-                
+        
         return func(obj)
     return gltype_array

@@ -96,9 +96,6 @@ def vertex_attribute_pointer_setter(gltype):
         return vertex_attrib_pointer_matrix
 
 def attribute_setter(gltype):
-    if not isinstance(gltype, GLArrayType):
-        raise TypeError('Argument should be array.')
-    
     func = vertex_attribute_pointer_setter(gltype)
     def attribute(location, value, type=None, normalized=False):
         assert (type is None) or (gltype.dtype == type.dtype), 'Cannot set attribute of "%s" with incompatible "%s".' % (gltype.dtype, type.dtype)

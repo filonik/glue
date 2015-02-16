@@ -45,9 +45,11 @@ def _gltype_sizeof(gltype):
 
 def _gltype_stridesof(gltype, sizes):
     if len(sizes) == 0:
+        return ()
+    elif len(sizes) == 1:
         return (_gltype_sizeof(gltype),)
     else:
-        head, tail = sizes[0], sizes[1:]
+        head, tail = sizes[1], sizes[1:]
         strides = _gltype_stridesof(gltype, tail)
         stride = head * strides[0]
         return (stride,) + strides

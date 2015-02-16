@@ -21,7 +21,7 @@ class VertexArray(resources.GLResource):
     
     @classmethod
     def delete_handle(cls, handle):
-        GL.glDeleteVertexArrays(handle)
+        GL.glDeleteVertexArrays(1, GL.GLuint(handle))
 
 class Buffer(resources.GLResource):
     _target = None
