@@ -135,6 +135,30 @@ class Window(Resource):
     def swap_buffers(self):
         GLFW.SwapBuffers(self._handle)
         
+    def set_window_size_callback(self, on_window_size):
+        GLFW.SetWindowSizeCallback(self._handle, on_window_size)
+    
+    def set_framebuffer_size_callback(self, on_size):
+        GLFW.SetFramebufferSizeCallback(self._handle, on_framebuffer_size)
+    
+    def set_mouse_button_callback(self, on_mouse_button):
+        GLFW.SetMouseButtonCallback(self._handle, on_mouse_button)
+    
+    def set_scroll_callback(self, on_mouse_scroll):
+        GLFW.SetScrollCallback(self._handle, on_mouse_scroll)
+    
+    def set_cursor_pos_callback(self, on_mouse_move):
+        GLFW.SetCursorPosCallback(self._handle, on_mouse_move)
+    
+    def set_key_callback(self, on_keyboard_key):
+        GLFW.SetKeyCallback(window, on_keyboard_key)
+    
+    on_mouse_click = set_mouse_button_callback
+    on_mouse_scroll = set_scroll_callback
+    on_mouse_move = set_cursor_pos_callback
+    on_keyboard_key = set_key_callback    
+    
+
 class Context(Resource):
     __references = dict()
     
