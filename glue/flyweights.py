@@ -12,8 +12,8 @@ def getdefault(references, handle, default=None):
 
 class FlyweightMeta(type):
     def __call__(cls, *args, **kwargs):
-        context = kwargs.get('context', Unspecified)
-        handle = kwargs.get('handle', Unspecified)
+        context = kwargs.pop('context', Unspecified)
+        handle = kwargs.pop('handle', Unspecified)
         
         references = cls.references(context=context)
         
@@ -74,3 +74,4 @@ class Resource(object):
         self.delete_handle(self._handle)
         
         self._handle = self._zero_handle
+        

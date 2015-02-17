@@ -61,7 +61,7 @@ class Program(resources.GLResource):
             obj.texture_unit = 0
     
     @classmethod
-    def create_handle(self):
+    def create_handle(cls):
         return GL.glCreateProgram()
     
     @classmethod
