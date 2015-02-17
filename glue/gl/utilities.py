@@ -29,14 +29,14 @@ def get_shader_source(path):
     with open(os.path.join(application_path(), path), "r") as f:
         return f.read()
 
-def load_texture(path):
+def load_texture(path, *args, **kwargs):
     from . import gl
     
     import PIL.Image
     
     image = PIL.Image.open(os.path.join(application_path(), path))
 
-    result = gl.Texture2D()
+    result = gl.Texture2D(*args, **kwargs)
     
     gl.Texture2D.bind(result)
     
@@ -44,23 +44,23 @@ def load_texture(path):
     
     return result
 
-def load_shader(path):
+def load_shader(path, *args, **kwargs):
     from . import gl
     
     type, source = get_shader_type(path), get_shader_source(path)
     
-    result = type()
+    result = type(*args, **kwargs)
     result.set_source(source)
     result.compile()
     
     return result
 
-def load_program(paths):
+def load_program(paths, *args, **kwargs):
     from . import gl
     
-    shaders = [load_shader(path) for path in paths]
+    shaders = [load_shader(path, *args, **kwargs) for path in paths]
     
-    result = gl.Program()
+    result = gl.Program(*args, **kwargs)
     
     for shader in shaders: result.attach(shader)
     
