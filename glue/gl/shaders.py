@@ -119,10 +119,10 @@ class Program(resources.GLResource):
         return GL.glGetProgramInfoLog(self._handle)
     
     def attach(self, shader):
-        GL.glAttachShader(self._handle, shader._handle)
+        GL.glAttachShader(self._handle, Shader.handle(shader))
         
     def detach(self, shader):
-        GL.glDetachShader(self._handle, shader._handle)
+        GL.glDetachShader(self._handle, Shader.handle(shader))
     
     def link(self):
         GL.glLinkProgram(self._handle)
