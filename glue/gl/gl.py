@@ -55,6 +55,32 @@ from .buffers import *
 from .shaders import *
 from .textures import *
 
+class Framebuffer(resources.GLResource):
+    @classmethod
+    def bind(cls, obj):
+        GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, cls.handle(obj))
+    
+    @classmethod
+    def create_handle(cls):
+        return GL.glGenFramebuffers(1)
+    
+    @classmethod
+    def delete_handle(cls, handle):
+        GL.glDeleteFramebuffers(1, GL.GLuint(handle))
+
+class Renderbuffer(resources.GLResource):
+    @classmethod
+    def bind(cls, obj):
+        GL.glBindRenderbuffer(GL.GL_RENDERBUFFER, cls.handle(obj))
+    
+    @classmethod
+    def create_handle(cls):
+        return GL.glGenRenderbuffers(1)
+    
+    @classmethod
+    def delete_handle(cls, handle):
+        GL.glDeleteRenderbuffers(1, GL.GLuint(handle))
+        
 from .extensions import buffers_numpy
 from .extensions import textures_numpy
 from .extensions import textures_pil

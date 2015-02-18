@@ -144,8 +144,8 @@ class Window(Resource):
     def set_mouse_button_callback(self, on_mouse_button):
         GLFW.SetMouseButtonCallback(self._handle, on_mouse_button)
     
-    def set_scroll_callback(self, on_mouse_scroll):
-        GLFW.SetScrollCallback(self._handle, on_mouse_scroll)
+    def set_scroll_callback(self, on_mouse_wheel):
+        GLFW.SetScrollCallback(self._handle, on_mouse_wheel)
     
     def set_cursor_pos_callback(self, on_mouse_move):
         GLFW.SetCursorPosCallback(self._handle, on_mouse_move)
@@ -153,8 +153,8 @@ class Window(Resource):
     def set_key_callback(self, on_keyboard_key):
         GLFW.SetKeyCallback(window, on_keyboard_key)
     
-    on_mouse_click = set_mouse_button_callback
-    on_mouse_scroll = set_scroll_callback
+    on_mouse_button = set_mouse_button_callback
+    on_mouse_wheel = set_scroll_callback
     on_mouse_move = set_cursor_pos_callback
     on_keyboard_key = set_key_callback    
     
