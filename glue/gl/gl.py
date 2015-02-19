@@ -13,6 +13,7 @@ from OpenGL import GL
 
 from . import types, funcs, utilities
 
+from ..decorators import classproperty
 from ..utilities import nth, Unspecified, specified, getspecified
 
 import logging
