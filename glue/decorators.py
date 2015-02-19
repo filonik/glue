@@ -75,6 +75,16 @@ class IndexedProperty(object):
 
 indexedproperty = IndexedProperty
 
+class ClassProperty(object):
+    def __init__(self, f):
+        self.f = f
+    def __get__(self, obj, cls=None):
+        if cls is None:
+            cls = type(obj)
+        return self.f(cls)
+
+classproperty = ClassProperty
+
 class UniversalMethod(object):
     def __init__(self, f):
         self.f = f

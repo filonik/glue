@@ -57,22 +57,28 @@ from .textures import *
 
 class Framebuffer(resources.GLResource):
     @classmethod
-    def bind(cls, obj):
-        GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, cls.handle(obj))
-    
-    @classmethod
     def create_handle(cls):
         return GL.glGenFramebuffers(1)
     
     @classmethod
     def delete_handle(cls, handle):
         GL.glDeleteFramebuffers(1, GL.GLuint(handle))
-
-class Renderbuffer(resources.GLResource):
+    
     @classmethod
     def bind(cls, obj):
-        GL.glBindRenderbuffer(GL.GL_RENDERBUFFER, cls.handle(obj))
+        GL.glBindFramebuffer(GL.GL_FRAMEBUFFER, cls.handle(obj))
     
+    @classproperty
+    def status(self):
+        return GL.glCheckFramebufferStatus(GL.GL_FRAMEBUFFER)
+    
+    def attach(self, attachment_point, attachment):
+        attachment.set_framebuffer(attachment_point, attachment)
+    
+    def detach(self, attachment_point, attachment):
+        attachment.set_framebuffer(attachment_point, None)
+    
+class Renderbuffer(resources.GLResource):
     @classmethod
     def create_handle(cls):
         return GL.glGenRenderbuffers(1)
@@ -80,7 +86,19 @@ class Renderbuffer(resources.GLResource):
     @classmethod
     def delete_handle(cls, handle):
         GL.glDeleteRenderbuffers(1, GL.GLuint(handle))
-        
+    
+    @classmethod
+    def bind(cls, obj):
+        GL.glBindRenderbuffer(GL.GL_RENDERBUFFER, cls.handle(obj))
+    
+    @classmethod
+    def set_framebuffer(cls, attachment, obj):
+        GL.FramebufferRenderbuffer(GL.GL_FRAMEBUFFER, attachment, GL.GL_RENDERBUFFER, cls.handle(obj), 0)
+    
+    @classmethod
+    def set_storage(cls, storage, size):
+        GL.RenderbufferStorage(GL.GL_FRAMEBUFFER, storage, size[0], size[1])
+    
 from .extensions import buffers_numpy
 from .extensions import textures_numpy
 from .extensions import textures_pil

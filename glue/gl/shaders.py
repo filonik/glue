@@ -126,6 +126,6 @@ class Program(resources.GLResource):
     
     def link(self):
         GL.glLinkProgram(self._handle)
-    
+        
         if self.link_status != 1:
             raise Exception("Program Link Error:\n%s" % (self.info_log,))
