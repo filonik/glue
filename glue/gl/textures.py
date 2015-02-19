@@ -41,7 +41,7 @@ class Texture1D(Texture):
     
     @classmethod
     def set_framebuffer(cls, attachment, obj):
-        GL.glFramebufferTexture1D(GL.GL_FRAMEBUFFER, attachment, self._target, cls.handle(obj), 0)
+        GL.glFramebufferTexture1D(GL.GL_FRAMEBUFFER, attachment, self._target, cls.handle(obj))
     
     def set_image(self, image, size, type, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
         GL.glTexImage1D(self._target, level, internalFormat, size[0], border, format, type, image)
@@ -54,7 +54,7 @@ class Texture2D(Texture):
     
     @classmethod
     def set_framebuffer(cls, attachment, obj):
-        GL.glFramebufferTexture2D(GL.GL_FRAMEBUFFER, attachment, self._target, cls.handle(obj), 0)
+        GL.glFramebufferTexture2D(GL.GL_FRAMEBUFFER, attachment, self._target, cls.handle(obj))
     
     def set_image(self, image, size, type, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
         GL.glTexImage2D(self._target, level, internalFormat, size[0], size[1], border, format, type, image)
@@ -67,7 +67,7 @@ class Texture3D(Texture):
     
     @classmethod
     def set_framebuffer(cls, attachment, obj):
-        GL.glFramebufferTexture3D(GL.GL_FRAMEBUFFER, attachment, self._target, cls.handle(obj), 0)
+        GL.glFramebufferTexture3D(GL.GL_FRAMEBUFFER, attachment, self._target, cls.handle(obj))
     
     def set_image(self, image, size, type, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
         GL.glTexImage3D(self._target, level, internalFormat, size[0], size[1], size[2], border, format, type, image)

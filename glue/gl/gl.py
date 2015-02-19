@@ -74,10 +74,10 @@ class Framebuffer(resources.GLResource):
         return GL.glCheckFramebufferStatus(GL.GL_FRAMEBUFFER)
     
     def attach(self, attachment_point, attachment):
-        type(attachment).set_framebuffer(attachment_point, attachment)
+        attachment.set_framebuffer(attachment_point, attachment)
     
     def detach(self, attachment_point, attachment):
-        type(attachment).set_framebuffer(attachment_point, None)
+        attachment.set_framebuffer(attachment_point, None)
     
 class Renderbuffer(resources.GLResource):
     @classmethod
@@ -94,7 +94,7 @@ class Renderbuffer(resources.GLResource):
     
     @classmethod
     def set_framebuffer(cls, attachment, obj):
-        GL.glFramebufferRenderbuffer(GL.GL_FRAMEBUFFER, attachment, GL.GL_RENDERBUFFER, cls.handle(obj), 0)
+        GL.glFramebufferRenderbuffer(GL.GL_FRAMEBUFFER, attachment, GL.GL_RENDERBUFFER, cls.handle(obj))
     
     @classmethod
     def set_storage(cls, storage, size):
