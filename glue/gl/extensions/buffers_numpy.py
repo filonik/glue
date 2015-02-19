@@ -17,7 +17,7 @@ def set_data(func):
             size = getspecified(size, data.nbytes)
             return func(obj, data, size, *args, **kwargs)
         
-        return func(obj, data, size=size, *args, **kwargs)
+        return func(obj, data, size, *args, **kwargs)
     
     return decorated
 
@@ -29,6 +29,6 @@ def set_sub_data(func):
             size = getspecified(size, data.nbytes)
             return func(obj, data, size, *args, **kwargs)
         
-        return func(obj, data, size=size, *args, **kwargs)
+        return func(obj, data, size, *args, **kwargs)
     
     return decorated

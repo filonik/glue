@@ -17,11 +17,12 @@ def set_image(func):
         if PIL.Image.isImageType(image):
             #image = image.transpose(PIL.Image.FLIP_TOP_BOTTOM)
             image = image.convert("RGBA")
-            data = np.array(list(image.getdata()), dtype=np.uint8)
-            data = np.reshape(data, image.size + (4,))
-            return func(obj, data, size=size, *args, **kwargs)
+            size = getspecified(size, image.size + (4,))
+            image = np.array(list(image.getdata()), dtype=np.uint8)
+            image = np.reshape(image, size)
+            return func(obj, image, size, *args, **kwargs)
         else:
-            return func(obj, image, size=size, *args, **kwargs)
+            return func(obj, image, size, *args, **kwargs)
     
     return decorated
 
@@ -32,10 +33,11 @@ def set_sub_image(func):
         if PIL.Image.isImageType(image):
             #image = image.transpose(PIL.Image.FLIP_TOP_BOTTOM)
             image = image.convert("RGBA")
-            data = np.array(list(image.getdata()), dtype=np.uint8)
-            data = np.reshape(data, image.size + (4,))
-            return func(obj, data, size=size, *args, **kwargs)
+            size = getspecified(size, image.size + (4,))
+            image = np.array(list(image.getdata()), dtype=np.uint8)
+            image = np.reshape(image, size)
+            return func(obj, image, size, *args, **kwargs)
         else:
-            return func(obj, image, size=size, *args, **kwargs)
+            return func(obj, image, size, *args, **kwargs)
     
     return decorated
