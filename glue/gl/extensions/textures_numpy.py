@@ -21,7 +21,7 @@ def set_image(func):
             image = np.flipud(image)
             return func(obj, image, size, type, *args, **kwargs)
         else:
-            return func(obj, image, size=size, *args, **kwargs)
+            return func(obj, image, size, *args, **kwargs)
     
     return decorated
 
@@ -35,6 +35,6 @@ def set_sub_image(func):
             image = np.flipud(image)
             return func(obj, image, size, type, *args, **kwargs)
         else:
-            return func(obj, image, size=size, *args, **kwargs)
+            return func(obj, image, size, *args, **kwargs)
     
     return decorated
