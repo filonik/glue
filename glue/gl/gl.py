@@ -98,7 +98,7 @@ class Renderbuffer(resources.GLResource):
     
     @classmethod
     def set_storage(cls, storage, size):
-        GL.glRenderbufferStorage(GL.GL_FRAMEBUFFER, storage, size[0], size[1])
+        GL.glRenderbufferStorage(GL.GL_RENDERBUFFER, storage, size[0], size[1])
     
 from .extensions import buffers_numpy
 from .extensions import textures_numpy
