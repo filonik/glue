@@ -77,8 +77,8 @@ def uniform_setter(gltype):
             func(location, count, transpose, value)
         return uniform_matrix
 
-def vertex_attribute_pointer_setter(gltype):
-    func = _gltensortype_to_vertexattribpointer_func(gltype.dtype, normalized=False)
+def vertex_attribute_pointer_setter(gltype, normalized=False):
+    func = _gltensortype_to_vertexattribpointer_func(gltype.dtype, normalized=normalized)
     rank = len(gltype.dtype.sizes)
     if rank == 0:
         size = 1
@@ -97,9 +97,9 @@ def vertex_attribute_pointer_setter(gltype):
                 func(location + n, size, gltype.type, stride, ctypes.c_void_p(offset + inner_stride * n))
         return vertex_attrib_pointer_matrix
 
-def attribute_setter(gltype):
-    func = vertex_attribute_pointer_setter(gltype)
-    def attribute(location, value, type=None, normalized=False):
+def attribute_setter(gltype, normalized=False):
+    func = vertex_attribute_pointer_setter(gltype, normalized=normalized)
+    def attribute(location, value, type=None):
         assert (type is None) or (gltype.dtype == type.dtype), 'Cannot set attribute of "%s" with incompatible "%s".' % (gltype.dtype, type.dtype)
         type = gltype if type is None else type
         if value is None:
@@ -107,5 +107,5 @@ def attribute_setter(gltype):
         else:
             GL.glEnableVertexAttribArray(location)
             GL.glBindBuffer(GL.GL_ARRAY_BUFFER, value)
-            func(location, normalized=normalized, stride=type.stride, offset=type.offset)
+            func(location, stride=type.stride, offset=type.offset)
     return attribute
