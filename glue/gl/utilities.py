@@ -8,7 +8,9 @@ import six
 import OpenGL
 from OpenGL import GL
 
-_TYPE_MAP = {
+_GENERIC_SUFFIX = '.glsl'
+
+_SUFFIX_MAP = {
     ".vs": GL.GL_VERTEX_SHADER, ".vert": GL.GL_VERTEX_SHADER,
     ".cs": GL.GL_TESS_CONTROL_SHADER, ".tc": GL.GL_TESS_CONTROL_SHADER, ".tesc": GL.GL_TESS_CONTROL_SHADER,
     ".es": GL.GL_TESS_EVALUATION_SHADER, ".te": GL.GL_TESS_EVALUATION_SHADER, ".tese": GL.GL_TESS_EVALUATION_SHADER,
@@ -19,9 +21,10 @@ _TYPE_MAP = {
 try:
     import preprocess
     registry = preprocess.getDefaultContentTypesRegistry()
-    registry.suffixMap['glsl'] = 'C++'
-    for key, value in six.iteritems(_TYPE_MAP):
-        registry.suffixMap[key[1:]] = 'C++'
+    registry.suffixMap[_GENERIC_SUFFIX] = 'C++'
+    for key, value in six.iteritems(_SUFFIX_MAP):
+        registry.suffixMap[key] = 'C++'
+    print(registry.getContentType('data/shader/plain.vs'))
 except ImportError:
     preprocess = None
 
@@ -29,7 +32,7 @@ def application_path():
     return os.path.dirname(os.path.realpath(sys.argv[0]))
 
 def file_extension_to_shader_type(ext):
-    return _TYPE_MAP[ext]
+    return _SUFFIX_MAP[ext]
 
 def get_shader_type(path):
     _, ext = os.path.splitext(path)
