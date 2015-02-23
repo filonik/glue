@@ -44,7 +44,7 @@ def _get_shader_source_plain(path):
 def _get_shader_source_preprocess(path, include_paths=[], defines={}):
     import StringIO
     result = StringIO.StringIO()
-    preprocess.preprocess(os.path.join(application_path(), path), result, includePath=include_paths, defines=defines)
+    preprocess.preprocess(os.path.join(application_path(), path), result, includePath=include_paths, defines=defines, substitute=1)
     return result.getvalue()
 
 def get_shader_source(path, *args, **kwargs):
