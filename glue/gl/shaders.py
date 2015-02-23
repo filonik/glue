@@ -14,6 +14,16 @@ class Shader(resources.GLResource):
     _type = None
     
     @classmethod
+    def fromtype(cls, type, *args, **kwargs):
+        return {
+            GL.GL_VERTEX_SHADER: VertexShader,
+            GL.GL_TESS_CONTROL_SHADER: TessellationControlShader,
+            GL.GL_TESS_EVALUATION_SHADER: TessellationEvaluationShader,
+            GL.GL_GEOMETRY_SHADER: GeometryShader,
+            GL.GL_FRAGMENT_SHADER: FragmentShader,
+        }[type](*args, **kwargs)
+    
+    @classmethod
     def create_handle(cls):
         return GL.glCreateShader(cls._type)
     
