@@ -24,7 +24,6 @@ try:
     registry.suffixMap[_GENERIC_SUFFIX] = 'C++'
     for key, value in six.iteritems(_SUFFIX_MAP):
         registry.suffixMap[key] = 'C++'
-    print(registry.getContentType('data/shader/plain.vs'))
 except ImportError:
     preprocess = None
 
