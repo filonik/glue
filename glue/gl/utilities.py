@@ -27,8 +27,8 @@ try:
 except ImportError:
     preprocess = None
 
-def application_path():
-    return os.path.dirname(os.path.realpath(sys.argv[0]))
+def application_path(path):
+    return os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), path)
 
 def file_extension_to_shader_type(ext):
     return _SUFFIX_MAP[ext]
@@ -38,13 +38,14 @@ def get_shader_type(path):
     return file_extension_to_shader_type(ext)
 
 def _get_shader_source_plain(path):
-    with open(os.path.join(application_path(), path), "r") as f:
+    with open(application_path(path), "r") as f:
         return f.read()
 
 def _get_shader_source_preprocess(path, include_paths=[], defines={}):
     import StringIO
     result = StringIO.StringIO()
-    preprocess.preprocess(os.path.join(application_path(), path), result, includePath=include_paths, defines=defines, substitute=1)
+    includePath = [application_path(include_path) for include_path in include_paths]
+    preprocess.preprocess(application_path(path), result, includePath=includePath, defines=defines, substitute=1)
     return result.getvalue()
 
 def get_shader_source(path, *args, **kwargs):
@@ -58,7 +59,7 @@ def load_texture(path, *args, **kwargs):
     
     import PIL.Image
     
-    image = PIL.Image.open(os.path.join(application_path(), path))
+    image = PIL.Image.open(application_path(path))
 
     result = gl.Texture2D(*args, **kwargs)
     
