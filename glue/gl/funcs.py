@@ -11,13 +11,15 @@ _gl_lpointer_types = (GL.GL_DOUBLE,)
 _gl_ipointer_types = (GL.GL_BYTE, GL.GL_UNSIGNED_BYTE, GL.GL_SHORT, GL.GL_UNSIGNED_SHORT, GL.GL_INT, GL.GL_UNSIGNED_INT,)
 _gl_pointer_types = (GL.GL_HALF_FLOAT, GL.GL_FLOAT, GL.GL_DOUBLE, GL.GL_FIXED, GL.GL_INT_2_10_10_10_REV, GL.GL_UNSIGNED_INT_2_10_10_10_REV, GL.GL_UNSIGNED_INT_10F_11F_11F_REV,)
 
-def _gltensortype_to_vertexattribpointer_func(gltensortype):
+def _gltensortype_to_vertexattribpointer_func(gltensortype, normalized=False):
     if gltensortype.type in _gl_lpointer_types:
         return GL.glVertexAttribLPointer
     if gltensortype.type in _gl_ipointer_types:
         return GL.glVertexAttribIPointer
     if gltensortype.type in _gl_pointer_types:
-        return GL.glVertexAttribPointer
+        def glVertexAttribPointer(location, size, type, stride, offset):
+            GL.glVertexAttribPointer(location, size, type, normalized, stride, offset)
+        return glVertexAttribPointer
 
 _gltensortype_to_uniform_funcs = {
     (GL.GL_INT, ()): GL.glUniform1i,
@@ -76,23 +78,23 @@ def uniform_setter(gltype):
         return uniform_matrix
 
 def vertex_attribute_pointer_setter(gltype):
-    func = _gltensortype_to_vertexattribpointer_func(gltype.dtype)
+    func = _gltensortype_to_vertexattribpointer_func(gltype.dtype, normalized=False)
     rank = len(gltype.dtype.sizes)
     if rank == 0:
         size = 1
-        def vertex_attrib_pointer_scalar(location, normalized=False, stride=gltype.stride, offset=gltype.offset):
-            func(location, size, gltype.type, normalized, stride, ctypes.c_void_p(offset))
+        def vertex_attrib_pointer_scalar(location, stride=gltype.stride, offset=gltype.offset):
+            func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
         return vertex_attrib_pointer_scalar
     elif rank == 1:
         size = gltype.dtype.sizes[0]
-        def vertex_attrib_pointer_vector(location, normalized=False, stride=gltype.stride, offset=gltype.offset):
-            func(location, size, gltype.type, normalized, stride, ctypes.c_void_p(offset))
+        def vertex_attrib_pointer_vector(location, stride=gltype.stride, offset=gltype.offset):
+            func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
         return vertex_attrib_pointer_vector
     elif rank == 2:
         outer_size, size, inner_stride = gltype.dtype.sizes[0], gltype.dtype.sizes[1], gltype.dtype.strides[1]
-        def vertex_attrib_pointer_matrix(location, normalized=False, stride=gltype.stride, offset=gltype.offset):
+        def vertex_attrib_pointer_matrix(location, stride=gltype.stride, offset=gltype.offset):
             for n in range(outer_size):
-                func(location + n, size, gltype.type, normalized, stride, ctypes.c_void_p(offset + inner_stride * n))
+                func(location + n, size, gltype.type, stride, ctypes.c_void_p(offset + inner_stride * n))
         return vertex_attrib_pointer_matrix
 
 def attribute_setter(gltype):
