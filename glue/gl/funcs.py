@@ -43,6 +43,19 @@ _gltensortype_to_uniform_funcs = {
     (GL.GL_FLOAT, (3, 4)): GL.glUniformMatrix3x4fv,
     (GL.GL_FLOAT, (4, 2)): GL.glUniformMatrix4x2fv,
     (GL.GL_FLOAT, (4, 3)): GL.glUniformMatrix4x3fv,
+    (GL.GL_DOUBLE, ()): GL.glUniform1d,
+    (GL.GL_DOUBLE, (2,)): GL.glUniform2dv,
+    (GL.GL_DOUBLE, (3,)): GL.glUniform3dv,
+    (GL.GL_DOUBLE, (4,)): GL.glUniform4dv,
+    (GL.GL_DOUBLE, (2, 2)): GL.glUniformMatrix2dv,
+    (GL.GL_DOUBLE, (3, 3)): GL.glUniformMatrix2dv,
+    (GL.GL_DOUBLE, (4, 4)): GL.glUniformMatrix4dv,
+    (GL.GL_DOUBLE, (2, 3)): GL.glUniformMatrix2x3dv,
+    (GL.GL_DOUBLE, (2, 4)): GL.glUniformMatrix2x4dv,
+    (GL.GL_DOUBLE, (3, 2)): GL.glUniformMatrix3x2dv,
+    (GL.GL_DOUBLE, (3, 4)): GL.glUniformMatrix3x4dv,
+    (GL.GL_DOUBLE, (4, 2)): GL.glUniformMatrix4x2dv,
+    (GL.GL_DOUBLE, (4, 3)): GL.glUniformMatrix4x3dv,
 }
 
 def _gltensortype_to_uniform_func(gltype):
