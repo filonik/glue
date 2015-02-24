@@ -151,7 +151,7 @@ class Window(Resource):
         GLFW.SetCursorPosCallback(self._handle, on_mouse_move)
     
     def set_key_callback(self, on_keyboard_key):
-        GLFW.SetKeyCallback(window, on_keyboard_key)
+        GLFW.SetKeyCallback(self._handle, on_keyboard_key)
     
     on_mouse_button = set_mouse_button_callback
     on_mouse_wheel = set_scroll_callback
