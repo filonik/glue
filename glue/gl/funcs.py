@@ -12,10 +12,10 @@ _gl_ipointer_types = (GL.GL_BYTE, GL.GL_UNSIGNED_BYTE, GL.GL_SHORT, GL.GL_UNSIGN
 _gl_pointer_types = (GL.GL_HALF_FLOAT, GL.GL_FLOAT, GL.GL_DOUBLE, GL.GL_FIXED, GL.GL_INT_2_10_10_10_REV, GL.GL_UNSIGNED_INT_2_10_10_10_REV, GL.GL_UNSIGNED_INT_10F_11F_11F_REV,)
 
 def _gltensortype_to_vertexattribpointer_func(gltensortype, normalized=False):
-    if gltensortype.type in _gl_lpointer_types:
-        return GL.glVertexAttribLPointer
-    if gltensortype.type in _gl_ipointer_types:
-        return GL.glVertexAttribIPointer
+    #if gltensortype.type in _gl_lpointer_types:
+    #    return GL.glVertexAttribLPointer
+    #if gltensortype.type in _gl_ipointer_types:
+    #    return GL.glVertexAttribIPointer
     if gltensortype.type in _gl_pointer_types:
         def glVertexAttribPointer(location, size, type, stride, offset):
             GL.glVertexAttribPointer(location, size, type, normalized, stride, offset)
