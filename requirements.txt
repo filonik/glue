@@ -1,4 +1,6 @@
 numpy
+PIL
 PyOpenGL
-cyglfw3
 six
+-e git://github.com/filonik/clibs.git#egg=clibs
+
