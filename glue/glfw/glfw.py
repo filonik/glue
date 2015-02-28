@@ -36,7 +36,7 @@ class Context(Resource):
     
     @classmethod
     def create_handle(cls, window):
-        return GLFW.Context(window.context)
+        return GLFW.Context(window)
     
     @classmethod
     def delete_handle(cls, handle):
