@@ -7,6 +7,7 @@ import six
 
 from clibs import glfw3 as GLFW
 
+from ..decorators import attrcached
 from ..flyweights import Resource
 from ..utilities import chdir, Unspecified, specified, getspecified
 
