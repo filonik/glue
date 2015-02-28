@@ -7,7 +7,6 @@ import six
 
 from clibs import glfw3 as GLFW
 
-from ..decorators import attrcached
 from ..flyweights import Resource
 from ..utilities import chdir, Unspecified, specified, getspecified
 
@@ -27,26 +26,6 @@ def initialized():
         yield
     finally:
         terminate()
-
-class Window(Resource):
-    __references = dict()
-    
-    @classmethod
-    def references(cls, context=Unspecified):
-        return cls.__references
-    
-    @classmethod
-    def create_handle(cls, title, size, monitor=None, share=None, hints=None):
-        return GLFW.Window(title, size, monitor=monitor, share=share, hints=hints)
-    
-    @classmethod
-    def delete_handle(cls, handle):
-        pass
-    
-    @property
-    @attrcached('__cached_context')
-    def context(self):
-        return Context(self)
     
 class Context(Resource):
     __references = dict()
@@ -70,7 +49,7 @@ class Context(Resource):
     
     @classmethod
     def set_current(cls, context):
-        GLFW.Context.set_current(context._handle)
+        GLFW.Context.set_current(context)
     
     def __init__(self, *args, **kwargs):
         super(Context, self).__init__(*args, **kwargs)
