@@ -27,6 +27,26 @@ def initialized():
     finally:
         terminate()
 
+class Window(Resource):
+    __references = dict()
+    
+    @classmethod
+    def references(cls, context=Unspecified):
+        return cls.__references
+    
+    @classmethod
+    def create_handle(cls, title, size, monitor=None, share=None, hints=None):
+        return GLFW.Window(title, size, monitor=monitor, share=share, hints=hints)
+    
+    @classmethod
+    def delete_handle(cls, handle):
+        pass
+    
+    @property
+    @attrcached('__cached_context')
+    def context(self):
+        return Context(self)
+    
 class Context(Resource):
     __references = dict()
     
@@ -36,7 +56,7 @@ class Context(Resource):
     
     @classmethod
     def create_handle(cls, window):
-        return window.context
+        return GLFW.Context(window._handle)
     
     @classmethod
     def delete_handle(cls, handle):
