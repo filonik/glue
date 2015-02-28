@@ -49,7 +49,7 @@ class Context(Resource):
     
     @classmethod
     def set_current(cls, context):
-        GLFW.Context.set_current(context)
+        GLFW.Context.set_current(context._handle)
     
     def __init__(self, *args, **kwargs):
         super(Context, self).__init__(*args, **kwargs)
