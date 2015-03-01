@@ -13,6 +13,14 @@ class Texture(resources.GLResource):
     _target = None
     
     @classmethod
+    def fromtype(cls, type, *args, **kwargs):
+        return {
+            GL.GL_TEXTURE_1D: Texture1D,
+            GL.GL_TEXTURE_2D: Texture2D,
+            GL.GL_TEXTURE_3D: Texture3D,
+        }[type](*args, **kwargs)
+    
+    @classmethod
     def bind(cls, obj):
         GL.glBindTexture(cls._target, cls.handle(obj))
     
