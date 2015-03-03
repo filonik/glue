@@ -6,6 +6,7 @@ import importlib
 import six
 
 import OpenGL
+#OpenGL.ERROR_CHECKING = False
 from OpenGL import GL
 
 #from ._debug import mock
