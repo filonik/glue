@@ -99,6 +99,8 @@ class Listener(object):
             del self.creates[src][:]
             del self.updates[src][:]
             del self.deletes[src][:]
+        elif cmd == 'source':
+            pass
         else:
             logging.warn('Unexpected command "%s %s".' % (path, cmd,))
     
