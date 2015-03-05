@@ -58,7 +58,7 @@ class Texture1D(Texture):
         GL.glTexImage1D(self._target, level, internalFormat, size[0], border, format, type, image)
     
     #@classmethod
-    def set_sub_image(self, image, size, type, offset=(0,), format=DEFAULT_TEXTURE_FORMAT):
+    def set_sub_image(self, image, size, type, level=0, offset=(0,), format=DEFAULT_TEXTURE_FORMAT):
         GL.glTexSubImage1D(self._target, level, offset[0], size[0], format, type, image)
 
 class Texture2D(Texture):
@@ -73,7 +73,7 @@ class Texture2D(Texture):
         GL.glTexImage2D(self._target, level, internalFormat, size[0], size[1], border, format, type, image)
     
     #@classmethod
-    def set_sub_image(self, image, size, type, offset=(0,0), format=DEFAULT_TEXTURE_FORMAT):
+    def set_sub_image(self, image, size, type, level=0, offset=(0,0), format=DEFAULT_TEXTURE_FORMAT):
         GL.glTexSubImage2D(self._target, level, offset[0], offset[1], size[0], size[1], format, type, image)
 
 class Texture3D(Texture):
@@ -88,5 +88,5 @@ class Texture3D(Texture):
         GL.glTexImage3D(self._target, level, internalFormat, size[0], size[1], size[2], border, format, type, image)
     
     #@classmethod
-    def set_sub_image(self, image, size, type, offset=(0,0,0), format=DEFAULT_TEXTURE_FORMAT):
+    def set_sub_image(self, image, size, type, level=0, offset=(0,0,0), format=DEFAULT_TEXTURE_FORMAT):
         GL.glTexSubImage3D(self._target, level, offset[0], offset[1], offset[2], size[0], size[1], size[2], format, type, image)
