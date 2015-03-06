@@ -17,8 +17,8 @@ def set_image(func):
     def decorated(obj, image, size=Unspecified, type=Unspecified, format=Unspecified, *args, **kwargs):
         if isinstance(image, np.ndarray):
             size = getspecified(size, image.shape)
-            type = _nptypes_to_gltypes[image.dtype.type]
-            format = DEFAULT_TEXTURE_FORMATS.get(image.shape[2], DEFAULT_TEXTURE_FORMAT)
+            type = getspecified(type, _nptypes_to_gltypes[image.dtype.type])
+            format = getspecified(format, DEFAULT_TEXTURE_FORMATS.get(image.shape[2], DEFAULT_TEXTURE_FORMAT))
             image = np.flipud(image)
             return func(obj, image, size, type, format=format, *args, **kwargs)
         else:
@@ -32,8 +32,8 @@ def set_sub_image(func):
     def decorated(obj, image, size=Unspecified, type=Unspecified, format=Unspecified, *args, **kwargs):
         if isinstance(image, np.ndarray):
             size = getspecified(size, image.shape)
-            type = _nptypes_to_gltypes[image.dtype.type]
-            format = DEFAULT_TEXTURE_FORMATS.get(image.shape[2], DEFAULT_TEXTURE_FORMAT)
+            type = getspecified(type, _nptypes_to_gltypes[image.dtype.type])
+            format = getspecified(format, DEFAULT_TEXTURE_FORMATS.get(image.shape[2], DEFAULT_TEXTURE_FORMAT))
             image = np.flipud(image)
             return func(obj, image, size, type, format=format, *args, **kwargs)
         else:
