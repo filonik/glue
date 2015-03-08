@@ -5,6 +5,8 @@ from OpenGL import GL
 
 from . import resources
 
+from ..utilities import Unspecified, specified, getspecified
+
 DEFAULT_TEXTURE_FORMAT = GL.GL_RGBA
 DEFAULT_TEXTURE_FORMATS = { 1: GL.GL_RED, 2: GL.GL_RG,  3: GL.GL_RGB, 4: GL.GL_RGBA, }
 DEFAULT_TEXTURE_SIZE = (256, 256)
@@ -56,11 +58,13 @@ class Texture1D(Texture):
         GL.glFramebufferTexture1D(GL.GL_FRAMEBUFFER, attachment, cls._target, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, image, size, type=DEFAULT_TEXTURE_TYPE, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         GL.glTexImage1D(self._target, level, internalFormat, size[0], border, format, type, image)
     
     #@classmethod
-    def set_sub_image(self, image, size, type=DEFAULT_TEXTURE_TYPE, level=0, offset=(0,), format=DEFAULT_TEXTURE_FORMAT):
+    def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,), format=DEFAULT_TEXTURE_FORMAT):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         GL.glTexSubImage1D(self._target, level, offset[0], size[0], format, type, image)
 
 class Texture2D(Texture):
@@ -71,11 +75,13 @@ class Texture2D(Texture):
         GL.glFramebufferTexture2D(GL.GL_FRAMEBUFFER, attachment, cls._target, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, image, size, type=DEFAULT_TEXTURE_TYPE, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         GL.glTexImage2D(self._target, level, internalFormat, size[0], size[1], border, format, type, image)
     
     #@classmethod
-    def set_sub_image(self, image, size, type=DEFAULT_TEXTURE_TYPE, level=0, offset=(0,0), format=DEFAULT_TEXTURE_FORMAT):
+    def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,0), format=DEFAULT_TEXTURE_FORMAT):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         GL.glTexSubImage2D(self._target, level, offset[0], offset[1], size[0], size[1], format, type, image)
 
 class Texture3D(Texture):
@@ -86,9 +92,11 @@ class Texture3D(Texture):
         GL.glFramebufferTexture3D(GL.GL_FRAMEBUFFER, attachment, cls._target, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, image, size, type=DEFAULT_TEXTURE_TYPE, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=DEFAULT_TEXTURE_FORMAT):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         GL.glTexImage3D(self._target, level, internalFormat, size[0], size[1], size[2], border, format, type, image)
     
     #@classmethod
-    def set_sub_image(self, image, size, type=DEFAULT_TEXTURE_TYPE, level=0, offset=(0,0,0), format=DEFAULT_TEXTURE_FORMAT):
+    def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,0,0), format=DEFAULT_TEXTURE_FORMAT):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         GL.glTexSubImage3D(self._target, level, offset[0], offset[1], offset[2], size[0], size[1], size[2], format, type, image)
