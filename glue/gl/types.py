@@ -38,6 +38,10 @@ class GLTensorType(collections.namedtuple('GLTensorType', ['type', 'sizes'])):
         return len(self.sizes)
     
     @property
+    def nbytes(self):
+        return _gltype_sizeof(self.type)
+    
+    @property
     def strides(self):
         return _gltype_stridesof(self.type, self.sizes)
     
@@ -71,6 +75,14 @@ class GLArrayType(collections.namedtuple('GLArrayType', ['size', 'stride', 'offs
         if isinstance(self.dtype, dict):
             return {name: self.dtype[name].type for name in self.dtype}
         return self.dtype.type
+    
+    @property
+    def nbytes(self):
+        if isinstance(self.dtype, dict):
+            return {name: self.dtype[name].nbytes for name in self.dtype}
+        import operator
+        product = reduce(operator.mul, self.sizes, 1)
+        return product * self.dtype.nbytes
     
     @property
     def sizes(self):
