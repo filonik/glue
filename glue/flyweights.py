@@ -23,7 +23,7 @@ class FlyweightMeta(type):
         result = getdefault(references, handle)
         
         if result is None:
-            result = super(FlyweightMeta, cls).__call__(handle=handle, context=context)
+            result = super(FlyweightMeta, cls).__call__(handle=handle, context=context, *args, **kwargs)
             references[handle] = weakref.ref(result)
         
         return result
@@ -60,7 +60,7 @@ class Resource(object):
     def __init__(self, *args, **kwargs):
         self._context = kwargs.pop('context', Unspecified)
         self._handle = kwargs.pop('handle', Unspecified)
-        super(Resource, self).__init__(*args, **kwargs)
+        super(Resource, self).__init__()#(*args, **kwargs)
     
     def __nonzero__(self):
         return self._handle != self._zero_handle

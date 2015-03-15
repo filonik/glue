@@ -31,7 +31,7 @@ class Texture(resources.GLResource):
         GL.glBindTexture(cls._target, cls.handle(obj))
     
     @classmethod
-    def create_handle(cls):
+    def create_handle(cls, *args, **kwargs):
         return GL.glGenTextures(1)
     
     @classmethod
