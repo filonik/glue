@@ -46,6 +46,14 @@ def clear_depth(depth):
 def clear(mask=DEFAULT_CLEAR_MASK):
     GL.glClear(mask)
 
+def viewport(size, offset=(0, 0)):
+    GL.glViewport(
+        nth(offset, 0, 0),
+        nth(offset, 1, 0),
+        nth(size, 0, 0),
+        nth(size, 0, 0)
+    )
+    
 def cleanup(context=Unspecified):
     if not specified(context):
         context = backend.Context.get_current()
