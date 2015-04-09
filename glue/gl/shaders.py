@@ -78,9 +78,18 @@ class Program(resources.GLResource):
     def delete_handle(cls, handle):
         GL.glDeleteProgram(handle)
     
+    def __init__(self, *args, **kwargs):
+        super(Program, self).__init__(*args, **kwargs)
+        
+        self._uniform_location_cache = {}
+    
     @indexedproperty
-    def uniforms(self, key): 
-        return GL.glGetUniformLocation(self._handle, key)
+    def uniforms(self, key):
+        result = self._uniform_location_cache.get(key)
+        if result is None:
+            result = GL.glGetUniformLocation(self._handle, key)
+            self._uniform_location_cache[key] = result
+        return result
     
     @uniforms.setter
     def uniforms(self, key, value):
@@ -135,6 +144,8 @@ class Program(resources.GLResource):
         GL.glDetachShader(self._handle, Shader.handle(shader))
     
     def link(self):
+        self._uniform_location_cache.clear()
+        
         GL.glLinkProgram(self._handle)
         
         if self.link_status != 1:
