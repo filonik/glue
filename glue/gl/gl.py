@@ -43,6 +43,9 @@ def clear_color(color):
 def clear_depth(depth):
     GL.glClearDepth(depth)
 
+def clear_stencil(stencil):
+    GL.glClearStencil(stencil)
+
 def clear(mask=DEFAULT_CLEAR_MASK):
     GL.glClear(mask)
 
