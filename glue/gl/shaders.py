@@ -82,6 +82,8 @@ class Program(resources.GLResource):
         super(Program, self).__init__(*args, **kwargs)
         
         self._uniform_location_cache = {}
+        self._input_location_cache = {}
+        self._output_location_cache = {}
     
     @indexedproperty
     def uniforms(self, key):
@@ -111,8 +113,12 @@ class Program(resources.GLResource):
             pass
     
     @indexedproperty
-    def inputs(self, key): 
-        return GL.glGetAttribLocation(self._handle, key)
+    def inputs(self, key):
+        result = self._input_location_cache.get(key)
+        if result is None:
+            result = GL.glGetAttribLocation(self._handle, key)
+            self._input_location_cache[key] = result
+        return result
     
     @inputs.setter
     def inputs(self, key, value):
@@ -126,8 +132,12 @@ class Program(resources.GLResource):
             pass
     
     @indexedproperty
-    def outputs(self, key): 
-        return GL.glGetFragDataLocation(self._handle, key)
+    def outputs(self, key):
+        result = self._output_location_cache.get(key)
+        if result is None:
+            result = GL.glGetFragDataLocation(self._handle, key)
+            self._output_location_cache[key] = result
+        return result
     
     @property
     def link_status(self):
@@ -145,6 +155,8 @@ class Program(resources.GLResource):
     
     def link(self):
         self._uniform_location_cache.clear()
+        self._input_location_cache.clear()
+        self._output_location_cache.clear()
         
         GL.glLinkProgram(self._handle)
         
