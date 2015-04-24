@@ -73,6 +73,7 @@ def load_textures(path, *args, **kwargs):
     import PIL.Image
     
     image = PIL.Image.open(application_path(path))
+    image = image.convert("RGBA")
     
     return create_textures(image, *args, **kwargs)
     
