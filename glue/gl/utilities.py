@@ -54,20 +54,34 @@ def get_shader_source(path, *args, **kwargs):
     else:
         return _get_shader_source_plain(path)
 
-def load_texture(path, *args, **kwargs):
+def create_textures(image, *args, **kwargs):
+    from . import gl
+    
+    count = kwargs.get("count", 1)
+    
+    result = [gl.Texture2D(*args, **kwargs) for _ in range(count)]
+    
+    for texture in result:
+        gl.Texture2D.bind(result)
+        
+        result.set_image(image)
+        
+    return result
+    
+def load_textures(path, *args, **kwargs):
     from . import gl
     
     import PIL.Image
     
     image = PIL.Image.open(application_path(path))
+    
+    return create_textures(image, *args, **kwargs)
+    
+def create_texture(image, *args, **kwargs):
+    return create_textures(image, count=1, *args, **kwargs)[0]
 
-    result = gl.Texture2D(*args, **kwargs)
-    
-    gl.Texture2D.bind(result)
-    
-    result.set_image(image)
-    
-    return result
+def load_texture(path, *args, **kwargs):
+    return load_textures(path, count=1, *args, **kwargs)[0]
 
 def load_shader(path, *args, **kwargs):
     from . import gl
