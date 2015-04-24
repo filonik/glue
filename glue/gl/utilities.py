@@ -62,9 +62,8 @@ def create_textures(image, *args, **kwargs):
     result = [gl.Texture2D(*args, **kwargs) for _ in range(count)]
     
     for texture in result:
-        gl.Texture2D.bind(result)
-        
-        result.set_image(image)
+        gl.Texture2D.bind(texture)
+        texture.set_image(image)
         
     return result
     
