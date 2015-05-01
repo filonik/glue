@@ -117,6 +117,8 @@ def gltype_array(obj):
     raise TypeError('Failed to deduce GLArrayType from object of type "%s".' % (type(obj).__name__,))
 
 def gltype(obj):
+    if obj is None:
+        return obj
     if isinstance(obj, GLTypes):
         return obj
     
