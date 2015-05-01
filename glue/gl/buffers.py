@@ -41,6 +41,7 @@ class Buffer(resources.GLResource):
     def __init__(self, *args, **kwargs):
         super(Buffer, self).__init__(*args, **kwargs)
         self._type = None
+        self._size = None
     
     @property
     def type(self):
@@ -50,12 +51,14 @@ class Buffer(resources.GLResource):
         type = types.gltype(data)
         GL.glBufferData(self._target, size, data, usage)
         self._type = type
+        self._size = size
         
     def get_sub_data(self, data, size, offset=0):
+        #type = types.gltype(data) #TODO: Type Check?
         GL.glGetBufferSubData(self._target, offset, size, data)
     
     def set_sub_data(self, data, size, offset=0):
-        type = types.gltype(data)
+        #type = types.gltype(data) #TODO: Type Check?
         GL.glBufferSubData(self._target, offset, size, data)
     
     def bind_base(self, index):
