@@ -68,7 +68,7 @@ class ElementArrayBuffer(Buffer):
     _target = GL.GL_ELEMENT_ARRAY_BUFFER
     
 class TransformFeedbackBuffer(Buffer):
-    _target = GL_TRANSFORM_FEEDBACK_BUFFER
+    _target = GL.GL_TRANSFORM_FEEDBACK_BUFFER
 
 VertexArrayObject = VertexArray
 VertexBufferObject = ArrayBuffer
