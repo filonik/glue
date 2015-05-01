@@ -62,7 +62,7 @@ class Buffer(resources.GLResource):
         GL.glBufferSubData(self._target, offset, size, data)
     
     def bind_base(self, index):
-        GL.glBindBufferBase(self._target, index, self.handle(obj))
+        GL.glBindBufferBase(self._target, index, self._handle)
     
 class ArrayBuffer(Buffer):
     _target = GL.GL_ARRAY_BUFFER
