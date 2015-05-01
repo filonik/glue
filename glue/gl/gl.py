@@ -70,6 +70,7 @@ def cleanup(context=Unspecified):
 from .buffers import *
 from .shaders import *
 from .textures import *
+from .queries import *
 
 class Framebuffer(resources.GLResource):
     @classmethod
