@@ -10,6 +10,8 @@ from . import types, funcs, resources, textures
 import logging
 log = logging.getLogger(__name__)
 
+DEFAULT_TRANSFORM_FEEDBACK_BUFFER_MODE = GL.GL_INTERLEAVED_ATTRIBS
+
 class Shader(resources.GLResource):
     _type = None
     
@@ -146,6 +148,9 @@ class Program(resources.GLResource):
     @property
     def info_log(self):
         return GL.glGetProgramInfoLog(self._handle)
+    
+    def set_transform_feedback_varyings(self, varyings, buffer_mode=DEFAULT_TRANSFORM_FEEDBACK_BUFFER_MODE):
+        GL.glTransformFeedbackVaryings(self._handle, len(varyings), varyings, buffer_mode)
     
     def attach(self, shader):
         GL.glAttachShader(self._handle, Shader.handle(shader))

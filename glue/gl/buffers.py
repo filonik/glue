@@ -51,15 +51,24 @@ class Buffer(resources.GLResource):
         GL.glBufferData(self._target, size, data, usage)
         self._type = type
         
+    def get_sub_data(self, data, size, offset=0):
+        GL.glGetBufferSubData(self._target, offset, size, data)
+    
     def set_sub_data(self, data, size, offset=0):
         type = types.gltype(data)
         GL.glBufferSubData(self._target, offset, size, data)
-
+    
+    def bind_base(self, index):
+        GL.glBindBufferBase(self._target, index, self.handle(obj))
+    
 class ArrayBuffer(Buffer):
     _target = GL.GL_ARRAY_BUFFER
 
 class ElementArrayBuffer(Buffer):
     _target = GL.GL_ELEMENT_ARRAY_BUFFER
+    
+class TransformFeedbackBuffer(Buffer):
+    _target = GL_TRANSFORM_FEEDBACK_BUFFER
 
 VertexArrayObject = VertexArray
 VertexBufferObject = ArrayBuffer
