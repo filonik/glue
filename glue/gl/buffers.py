@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
 import OpenGL
-from OpenGL import GL
+from OpenGL import GL, arrays
 
 from . import resources, types
 
@@ -55,11 +55,11 @@ class Buffer(resources.GLResource):
         
     def get_sub_data(self, data, size, offset=0):
         #type = types.gltype(data) #TODO: Type Check?
-        GL.glGetBufferSubData(self._target, offset, size, data)
+        GL.glGetBufferSubData(self._target, offset, size, arrays.ArrayDatatype.voidDataPointer(data))
     
     def set_sub_data(self, data, size, offset=0):
         #type = types.gltype(data) #TODO: Type Check?
-        GL.glBufferSubData(self._target, offset, size, data)
+        GL.glBufferSubData(self._target, offset, size, arrays.ArrayDatatype.voidDataPointer(data))
     
     def bind_base(self, index):
         GL.glBindBufferBase(self._target, index, self._handle)
