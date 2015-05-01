@@ -23,5 +23,5 @@ class Query(resources.GLResource):
     @property
     def result(self):
         result = arrays.GLuintArray.zeros((1,))
-        GL.glGetQueryObjectuiv(self._handle, GL_QUERY_RESULT, result)
+        GL.glGetQueryObjectuiv(self._handle, GL.GL_QUERY_RESULT, result)
         return result
