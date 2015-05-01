@@ -49,6 +49,9 @@ def clear_stencil(stencil):
 def clear(mask=DEFAULT_CLEAR_MASK):
     GL.glClear(mask)
 
+def flush():
+    GL.glFlush()
+
 def viewport(size, offset=(0, 0)):
     GL.glViewport(
         nth(offset, 0, 0),
