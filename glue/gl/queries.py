@@ -18,7 +18,7 @@ class Query(resources.GLResource):
         GL.glDeleteQueries(1, GL.GLuint(handle))
     
     @property
-    def result(self)
+    def result(self):
         result = arrays.GLuintArray.zeros((1,))
         GL.glGetQueryObjectuiv(self._handle, GL_QUERY_RESULT, result)
         return result
