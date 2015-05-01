@@ -7,6 +7,12 @@ from OpenGL import GL, arrays
 
 # Functions that are not wrapped nicely in PyOpenGL yet.
 
+def glTransformFeedbackVaryings(program, varyings, buffer_mode):
+    #TODO: Handle multiple strings...
+    buffer = ctypes.create_string_buffer(varyings[0])
+    c_text = ctypes.cast(ctypes.pointer(ctypes.pointer(buffer)), ctypes.POINTER(ctypes.POINTER(GL.GLchar)))
+    GL.glTransformFeedbackVaryings(program, 1, c_text, buffer_mode)
+
 def glGetProgramInterfaceiv(program, programInterface, pname):
     params = arrays.GLintArray.zeros((1,))
     GL.glGetProgramInterfaceiv(program, programInterface, pname, params)

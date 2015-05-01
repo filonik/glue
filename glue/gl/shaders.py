@@ -5,7 +5,7 @@ from OpenGL import GL
 
 from ..decorators import indexedproperty
 
-from . import types, funcs, resources, textures
+from . import types, funcs, raw, resources, textures
 
 import logging
 log = logging.getLogger(__name__)
@@ -150,7 +150,7 @@ class Program(resources.GLResource):
         return GL.glGetProgramInfoLog(self._handle)
     
     def set_transform_feedback_varyings(self, varyings, buffer_mode=DEFAULT_TRANSFORM_FEEDBACK_BUFFER_MODE):
-        GL.glTransformFeedbackVaryings(self._handle, len(varyings), varyings, buffer_mode)
+        raw.glTransformFeedbackVaryings(self._handle, varyings, buffer_mode)
     
     def attach(self, shader):
         GL.glAttachShader(self._handle, Shader.handle(shader))
