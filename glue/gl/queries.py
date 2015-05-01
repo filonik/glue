@@ -11,11 +11,14 @@ log = logging.getLogger(__name__)
 class Query(resources.GLResource):
     @classmethod
     def create_handle(cls):
-        return GL.glGenQueries(1)
+        arr = GL.glGenQueries(1)
+        return arr[0]
     
     @classmethod
     def delete_handle(cls, handle):
-        GL.glDeleteQueries(1, GL.GLuint(handle))
+        arr = arrays.GLuintArray.asArray([handle])
+        size = arrays.GLuintArray.arraySize(arr)
+        GL.glDeleteQueries(size, arr)
     
     @property
     def result(self):
