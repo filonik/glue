@@ -5,6 +5,8 @@ from OpenGL import GL, arrays
 
 from . import resources, types
 
+from .utilities import Unspecified, specified, getspecified
+
 DEFAULT_BUFFER_USAGE = GL.GL_STATIC_DRAW
 
 class VertexArray(resources.GLResource):
