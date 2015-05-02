@@ -110,7 +110,22 @@ class GLArrayType(collections.namedtuple('GLArrayType', ['size', 'stride', 'offs
 
 GLTypes = (GLTensorType, GLArrayType)
 
+import types
+
+# TODO: Some of these conversions are lossy.
+_gltypes_to_pytypes = {
+    GL.GL_BOOL: types.BooleanType,
+    GL.GL_INT: types.IntType,
+    GL.GL_FLOAT: types.FloatType,
+}
+
+_pytypes_to_gltypes = reversedict(_gltypes_to_pytypes)
+
 def gltype_tensor(obj):
+    for pytype, gltype in _pytypes_to_gltypes.items():
+        if isinstance(obj, pytype):
+            return GLTensorType(gltype, ())
+    
     raise TypeError('Failed to deduce GLTensorType from object of type "%s".' % (type(obj).__name__,))
 
 def gltype_array(obj):

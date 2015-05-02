@@ -69,7 +69,10 @@ class ArrayBuffer(Buffer):
 
 class ElementArrayBuffer(Buffer):
     _target = GL.GL_ELEMENT_ARRAY_BUFFER
-    
+   
+class UniformBuffer(Buffer):   
+    _target = GL.GL_UNIFORM_BUFFER
+
 class TransformFeedbackBuffer(Buffer):
     _target = GL.GL_TRANSFORM_FEEDBACK_BUFFER
 
