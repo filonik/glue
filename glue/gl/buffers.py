@@ -3,9 +3,9 @@ from __future__ import absolute_import, division, print_function
 import OpenGL
 from OpenGL import GL, arrays
 
-from . import resources, types
+from ..utilities import Unspecified, specified, getspecified
 
-from .utilities import Unspecified, specified, getspecified
+from . import resources, types
 
 DEFAULT_BUFFER_USAGE = GL.GL_STATIC_DRAW
 
