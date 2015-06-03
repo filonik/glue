@@ -83,9 +83,24 @@ class Program(resources.GLResource):
     def __init__(self, *args, **kwargs):
         super(Program, self).__init__(*args, **kwargs)
         
-        self._uniform_location_cache = {}
         self._input_location_cache = {}
         self._output_location_cache = {}
+        self._subroutine_index_cache = {}
+        self._uniform_location_cache = {}
+
+    
+    @indexedproperty
+    def subroutines(self, key):
+        result = self._subroutine_index_cache.get(key)
+        if result is None:
+            shader_type, name = key
+            result = GL.glGetSubroutineIndex(self._handle, shader_type, name)
+            self._subroutine_index_cache[key] = result
+        return result
+    
+    @subroutines.setter
+    def subroutines(self, key, value):
+        pass
     
     @indexedproperty
     def uniforms(self, key):
