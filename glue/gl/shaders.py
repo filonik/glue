@@ -91,7 +91,7 @@ class Program(resources.GLResource):
         self._subroutine_location_cache = {}
     
     @indexedproperty
-    def subroutine_index(self, key):
+    def subroutine_indices(self, key):
         result = self._subroutine_index_cache.get(key)
         if result is None:
             shader_type, name = key
