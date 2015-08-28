@@ -116,14 +116,16 @@ class TextureCubeMap(Texture):
         GL.glFramebufferTexture(GL.GL_FRAMEBUFFER, attachment, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, target, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=Unspecified):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=Unspecified, target=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        target = getspecified(target, self._target)
         GL.glTexImage2D(target, level, internalFormat, size[0], size[1], border, format, type, image)
     
     #@classmethod
-    def set_sub_image(self, target, image, size, type=Unspecified, level=0, offset=(0,0), format=Unspecified):
+    def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,0), format=Unspecified, target=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        target = getspecified(target, self._target)
         GL.glTexSubImage2D(target, level, offset[0], offset[1], size[0], size[1], format, type, image)
 
