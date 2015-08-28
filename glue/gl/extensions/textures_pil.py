@@ -11,6 +11,7 @@ from ...utilities import Unspecified, specified, getspecified
 from ..textures import *
 
 @decorationmethod(Texture2D)
+@decorationmethod(TextureCubeMap)
 def set_image(func):
     @ft.wraps(func)
     def decorated(obj, image, size=Unspecified, *args, **kwargs):
@@ -27,6 +28,7 @@ def set_image(func):
     return decorated
 
 @decorationmethod(Texture2D)
+@decorationmethod(TextureCubeMap)
 def set_sub_image(func):
     @ft.wraps(func)
     def decorated(obj, image, size=Unspecified, *args, **kwargs):
