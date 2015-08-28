@@ -24,6 +24,7 @@ class Texture(resources.GLResource):
             GL.GL_TEXTURE_1D: Texture1D,
             GL.GL_TEXTURE_2D: Texture2D,
             GL.GL_TEXTURE_3D: Texture3D,
+            GL.GL_TEXTURE_CUBE_MAP: : TextureCubeMap,
         }[type](*args, **kwargs)
     
     @classmethod
@@ -106,3 +107,23 @@ class Texture3D(Texture):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
         GL.glTexSubImage3D(self._target, level, offset[0], offset[1], offset[2], size[0], size[1], size[2], format, type, image)
+
+class TextureCubeMap(Texture):
+    _target = GL.GL_TEXTURE_CUBE_MAP
+    
+    @classmethod
+    def set_framebuffer(cls, attachment, obj):
+        GL.glFramebufferTexture(GL.GL_FRAMEBUFFER, attachment, cls.handle(obj), 0)
+    
+    #@classmethod
+    def set_image(self, target, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=Unspecified):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
+        format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        GL.glTexImage2D(target, level, internalFormat, size[0], size[1], border, format, type, image)
+    
+    #@classmethod
+    def set_sub_image(self, target, image, size, type=Unspecified, level=0, offset=(0,0), format=Unspecified):
+        type = getspecified(type, DEFAULT_TEXTURE_TYPE)
+        format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        GL.glTexSubImage2D(target, level, offset[0], offset[1], size[0], size[1], format, type, image)
+
