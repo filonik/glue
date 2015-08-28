@@ -24,7 +24,7 @@ class Texture(resources.GLResource):
             GL.GL_TEXTURE_1D: Texture1D,
             GL.GL_TEXTURE_2D: Texture2D,
             GL.GL_TEXTURE_3D: Texture3D,
-            GL.GL_TEXTURE_CUBE_MAP: : TextureCubeMap,
+            GL.GL_TEXTURE_CUBE_MAP: TextureCubeMap,
         }[type](*args, **kwargs)
     
     @classmethod
