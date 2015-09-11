@@ -44,10 +44,19 @@ class Buffer(resources.GLResource):
         super(Buffer, self).__init__(*args, **kwargs)
         self._type = None
         self._size = None
+        self._divisor = None
     
     @property
     def type(self):
         return self._type
+        
+    @property
+    def size(self):
+        return self._size
+        
+    @property
+    def divisor(self):
+        return self._divisor
     
     def set_data(self, data, size, usage=DEFAULT_BUFFER_USAGE):
         type = types.gltype(data)

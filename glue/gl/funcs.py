@@ -94,7 +94,7 @@ def uniform_setter(gltype):
             func(location, count, transpose, value)
         return uniform_matrix
 
-def vertex_attribute_enabler(gltype, normalized=False):
+def vertex_attribute_enabler(gltype, normalized=False, divisor=None):
     func = _gltensortype_to_vertexattribpointer_func(gltype.dtype, normalized=normalized)
     rank = len(gltype.dtype.sizes)
     if rank == 0:
@@ -102,12 +102,16 @@ def vertex_attribute_enabler(gltype, normalized=False):
         def enable_vertex_attrib_scalar(location, stride=gltype.stride, offset=gltype.offset):
             GL.glEnableVertexAttribArray(location)
             func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
+            if divisor is not None:
+                GL.glVertexAttribDivisor(location + n, divisor)
         return enable_vertex_attrib_scalar
     elif rank == 1:
         size = gltype.dtype.sizes[0]
         def enable_vertex_attrib_vector(location, stride=gltype.stride, offset=gltype.offset):
             GL.glEnableVertexAttribArray(location)
             func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
+            if divisor is not None:
+                GL.glVertexAttribDivisor(location + n, divisor)
         return enable_vertex_attrib_vector
     elif rank == 2:
         outer_size, size, inner_stride = gltype.dtype.sizes[0], gltype.dtype.sizes[1], gltype.dtype.strides[0]
@@ -115,7 +119,8 @@ def vertex_attribute_enabler(gltype, normalized=False):
             for n in range(outer_size):
                 GL.glEnableVertexAttribArray(location + n)
                 func(location + n, size, gltype.type, stride, ctypes.c_void_p(offset + inner_stride * n))
-                #GL.glVertexAttribDivisor(location + n, 1)
+                if divisor is not None:
+                    GL.glVertexAttribDivisor(location + n, divisor)
         return enable_vertex_attrib_matrix
 
 def vertex_attribute_disabler(gltype):
@@ -137,8 +142,8 @@ def vertex_attribute_disabler(gltype):
                 GL.glDisableVertexAttribArray(location + n)
         return disable_vertex_attrib_matrix
 
-def attribute_setter(gltype, normalized=False):
-    enable = vertex_attribute_enabler(gltype, normalized=normalized)
+def attribute_setter(gltype, normalized=False, divisor=None):
+    enable = vertex_attribute_enabler(gltype, normalized=normalized,  divisor=divisor)
     disable = vertex_attribute_disabler(gltype)
     def attribute(location, value, type=None):
         assert (type is None) or (gltype.dtype == type.dtype), 'Cannot set attribute of "%s" with incompatible "%s".' % (gltype.dtype, type.dtype)
