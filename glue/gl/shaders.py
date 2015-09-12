@@ -50,6 +50,9 @@ class Shader(resources.GLResource):
         if self.compile_status != 1:
             raise Exception("Shader Compile Error:\n%s" % (self.info_log,))
 
+class ComputeShader(Shader):
+    _type = GL.GL_COMPUTE_SHADER
+
 class VertexShader(Shader):
     _type = GL.GL_VERTEX_SHADER
 
@@ -152,7 +155,7 @@ class Program(resources.GLResource):
         location = self.inputs[key]
         if location != -1:
             type = value.type.dtype[key] if isinstance(value.type.dtype, dict) else value.type
-            setter = funcs.attribute_setter(type)
+            setter = funcs.attribute_setter(type, divisor=value.divisor)
             setter(location, value._handle)
         else:
             #log.warn('Ignoring attribute "%s".' % (key,))
