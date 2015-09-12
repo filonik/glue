@@ -103,7 +103,7 @@ def vertex_attribute_enabler(gltype, normalized=False, divisor=None):
             GL.glEnableVertexAttribArray(location)
             func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
             if divisor is not None:
-                GL.glVertexAttribDivisor(location + n, divisor)
+                GL.glVertexAttribDivisor(location, divisor)
         return enable_vertex_attrib_scalar
     elif rank == 1:
         size = gltype.dtype.sizes[0]
@@ -111,7 +111,7 @@ def vertex_attribute_enabler(gltype, normalized=False, divisor=None):
             GL.glEnableVertexAttribArray(location)
             func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
             if divisor is not None:
-                GL.glVertexAttribDivisor(location + n, divisor)
+                GL.glVertexAttribDivisor(location, divisor)
         return enable_vertex_attrib_vector
     elif rank == 2:
         outer_size, size, inner_stride = gltype.dtype.sizes[0], gltype.dtype.sizes[1], gltype.dtype.strides[0]
