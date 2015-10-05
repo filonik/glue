@@ -18,6 +18,7 @@ class Shader(resources.GLResource):
     @classmethod
     def fromtype(cls, type, *args, **kwargs):
         return {
+            GL.GL_COMPUTE_SHADER: ComputeShader,
             GL.GL_VERTEX_SHADER: VertexShader,
             GL.GL_TESS_CONTROL_SHADER: TessellationControlShader,
             GL.GL_TESS_EVALUATION_SHADER: TessellationEvaluationShader,
