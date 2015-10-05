@@ -124,6 +124,15 @@ class Program(resources.GLResource):
             self._uniform_block_index_cache[key] = result
         return result
         
+    @uniform_blocks.setter
+    def uniform_blocks(self, key, value):
+        index = self.uniform_blocks[key]
+        if index != -1:
+            value.bind_base(index, target=GL.GL_UNIFORM_BUFFER)
+        else:
+            #log.warn('Ignoring buffer "%s".' % (key,))
+            pass
+    
     @indexedproperty
     def shader_storage_blocks(self, key):
         result = self._shader_storage_block_index_cache.get(key)
@@ -131,6 +140,15 @@ class Program(resources.GLResource):
             result = GL.glGetProgramResourceIndex(self._handle, GL.GL_SHADER_STORAGE_BLOCK, key)
             self._shader_storage_block_index_cache[key] = result
         return result
+    
+    @shader_storage_blocks.setter
+    def shader_storage_blocks(self, key, value):
+        index = self.shader_storage_blocks[key]
+        if index != -1:
+            value.bind_base(index, target=GL.GL_SHADER_STORAGE_BUFFER)
+        else:
+            #log.warn('Ignoring buffer "%s".' % (key,))
+            pass
     
     @indexedproperty
     def subroutine_indices(self, key):
