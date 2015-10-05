@@ -90,9 +90,47 @@ class Program(resources.GLResource):
         self._input_location_cache = {}
         self._output_location_cache = {}
         self._uniform_location_cache = {}
+       
+        self._transform_feedback_varying_cache = {}
+        self._transform_feedback_buffer_cache = {}
+        
+        self._uniform_block_index_cache = {}
+        self._shader_storage_block_index_cache = {}
         
         self._subroutine_index_cache = {}
         self._subroutine_location_cache = {}
+    
+    @indexedproperty
+    def transform_feedback_varyings(self, key):
+        result = self._transform_feedback_varying_cache.get(key)
+        if result is None:
+            result = GL.glGetProgramResourceIndex(self._handle, GL.GL_TRANSFORM_FEEDBACK_VARYING, key)
+            self._transform_feedback_varying_cache[key] = result
+        return result
+    
+    @indexedproperty
+    def transform_feedback_buffers(self, key):
+        result = self._transform_feedback_buffer_cache.get(key)
+        if result is None:
+            result = GL.glGetProgramResourceIndex(self._handle, GL.GL_TRANSFORM_FEEDBACK_BUFFER, key)
+            self._transform_feedback_buffer_cache[key] = result
+        return result
+    
+    @indexedproperty
+    def uniform_blocks(self, key):
+        result = self._uniform_block_index_cache.get(key)
+        if result is None:
+            result = GL.glGetProgramResourceIndex(self._handle, GL. GL_UNIFORM_BLOCK, key)
+            self._uniform_block_index_cache[key] = result
+        return result
+        
+    @indexedproperty
+    def shader_storage_blocks(self, key):
+        result = self._shader_storage_block_index_cache.get(key)
+        if result is None:
+            result = GL.glGetProgramResourceIndex(self._handle, GL.GL_SHADER_STORAGE_BLOCK, key)
+            self._shader_storage_block_index_cache[key] = result
+        return result
     
     @indexedproperty
     def subroutine_indices(self, key):
