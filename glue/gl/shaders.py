@@ -127,7 +127,7 @@ class Program(resources.GLResource):
     @uniform_blocks.setter
     def uniform_blocks(self, key, value):
         index = self.uniform_blocks[key]
-        if index != -1:
+        if index != 0xFFFFFFFF:
             value.bind_base(index, target=GL.GL_UNIFORM_BUFFER)
         else:
             #log.warn('Ignoring buffer "%s".' % (key,))
@@ -144,7 +144,7 @@ class Program(resources.GLResource):
     @shader_storage_blocks.setter
     def shader_storage_blocks(self, key, value):
         index = self.shader_storage_blocks[key]
-        if index != -1:
+        if index != 0xFFFFFFFF:
             value.bind_base(index, target=GL.GL_SHADER_STORAGE_BUFFER)
         else:
             #log.warn('Ignoring buffer "%s".' % (key,))
