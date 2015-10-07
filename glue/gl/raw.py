@@ -19,7 +19,7 @@ def glGetProgramInterfaceiv(program, programInterface, pname):
     return params[0]
 
 def glGetProgramResourceiv(program, programInterface, index, keys):
-    length = ctypes.c_void_p(0) #arrays.GLintArray.zeros((1,)) # unused
+    length = arrays.GLintArray.zeros((1,)) # ctypes.c_void_p(0)
     props = arrays.GLintArray.zeros((len(keys),))
     params = arrays.GLintArray.zeros((len(keys),))
     props[:] = keys

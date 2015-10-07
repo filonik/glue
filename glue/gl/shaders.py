@@ -120,7 +120,8 @@ class Program(resources.GLResource):
     def uniform_blocks(self, key):
         result = self._uniform_block_index_cache.get(key)
         if result is None:
-            result = GL.glGetProgramResourceIndex(self._handle, GL. GL_UNIFORM_BLOCK, key)
+            index = GL.glGetProgramResourceIndex(self._handle, GL.GL_UNIFORM_BLOCK, key)
+            result = raw.glGetProgramResourceiv(self._handle, GL.GL_UNIFORM_BLOCK, index, [GL.GL_BUFFER_BINDING])[0]
             self._uniform_block_index_cache[key] = result
         return result
         
@@ -137,7 +138,8 @@ class Program(resources.GLResource):
     def shader_storage_blocks(self, key):
         result = self._shader_storage_block_index_cache.get(key)
         if result is None:
-            result = GL.glGetProgramResourceIndex(self._handle, GL.GL_SHADER_STORAGE_BLOCK, key)
+            index = GL.glGetProgramResourceIndex(self._handle, GL.GL_SHADER_STORAGE_BLOCK, key)
+            result = raw.glGetProgramResourceiv(self._handle, GL.GL_SHADER_STORAGE_BLOCK, index, [GL.GL_BUFFER_BINDING])[0]
             self._shader_storage_block_index_cache[key] = result
         return result
     
