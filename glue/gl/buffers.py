@@ -72,6 +72,12 @@ class Buffer(resources.GLResource):
         #type = types.gltype(data) #TODO: Type Check?
         GL.glBufferSubData(self._target, offset, size, arrays.ArrayDatatype.voidDataPointer(data))
     
+    def map(self, access=GL.GL_READ_ONLY):
+        return GL.glMapBuffer(self._target, access)
+    
+    def unmap(self):
+        GL.glUnmapBuffer(self._target)
+    
     def bind_base(self, index, target=Unspecified):
         target = getspecified(target, self._target)
         GL.glBindBufferBase(target, index, self._handle)
