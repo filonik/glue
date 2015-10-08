@@ -94,8 +94,8 @@ class Program(resources.GLResource):
         self._transform_feedback_varying_cache = {}
         self._transform_feedback_buffer_cache = {}
         
-        self._uniform_block_index_cache = {}
-        self._shader_storage_block_index_cache = {}
+        self._uniform_block_binding_cache = {}
+        self._shader_storage_block_binding_cache = {}
         
         self._subroutine_index_cache = {}
         self._subroutine_location_cache = {}
@@ -117,14 +117,18 @@ class Program(resources.GLResource):
         return result
     
     @indexedproperty
+    def uniform_block_indices(self, key):
+        return GL.glGetProgramResourceIndex(self._handle, GL.GL_UNIFORM_BLOCK, key)
+    
+    @indexedproperty
     def uniform_blocks(self, key):
-        result = self._uniform_block_index_cache.get(key)
+        result = self._uniform_block_binding_cache.get(key)
         if result is None:
-            index = GL.glGetProgramResourceIndex(self._handle, GL.GL_UNIFORM_BLOCK, key)
+            index = self.uniform_block_indices[key]
             result = raw.glGetProgramResourceiv(self._handle, GL.GL_UNIFORM_BLOCK, index, [GL.GL_BUFFER_BINDING])[0]
-            self._uniform_block_index_cache[key] = result
+            self._uniform_block_binding_cache[key] = result
         return result
-        
+    
     @uniform_blocks.setter
     def uniform_blocks(self, key, value):
         index = self.uniform_blocks[key]
@@ -135,12 +139,16 @@ class Program(resources.GLResource):
             pass
     
     @indexedproperty
+    def shader_storage_block_indices(self, key):
+        return GL.glGetProgramResourceIndex(self._handle, GL.GL_SHADER_STORAGE_BLOCK, key)
+    
+    @indexedproperty
     def shader_storage_blocks(self, key):
-        result = self._shader_storage_block_index_cache.get(key)
+        result = self._shader_storage_block_binding_cache.get(key)
         if result is None:
-            index = GL.glGetProgramResourceIndex(self._handle, GL.GL_SHADER_STORAGE_BLOCK, key)
+            index = self.shader_storage_block_indices[key]
             result = raw.glGetProgramResourceiv(self._handle, GL.GL_SHADER_STORAGE_BLOCK, index, [GL.GL_BUFFER_BINDING])[0]
-            self._shader_storage_block_index_cache[key] = result
+            self._shader_storage_block_binding_cache[key] = result
         return result
     
     @shader_storage_blocks.setter
