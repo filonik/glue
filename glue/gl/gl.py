@@ -17,12 +17,14 @@ from . import types, funcs, utilities
 from ..decorators import classproperty
 from ..utilities import nth, Unspecified, specified, getspecified
 
+from .backends import generic
+
 import logging
 log = logging.getLogger(__name__)
 
 DEFAULT_CLEAR_MASK = GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT | GL.GL_STENCIL_BUFFER_BIT
 
-backend = None
+backend = generic
 
 def _get_backend():
     global backend
