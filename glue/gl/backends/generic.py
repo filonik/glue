@@ -2,7 +2,8 @@ from __future__ import absolute_import, division, print_function
 
 import collections
 
-from ..flyweights import Resource
+from ...flyweights import Resource
+from ...utilities import Unspecified, specified, getspecified
 
 class Context(Resource):
     __references = dict()

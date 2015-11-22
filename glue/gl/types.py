@@ -114,9 +114,9 @@ import types
 
 # TODO: Some of these conversions are lossy.
 _gltypes_to_pytypes = {
-    GL.GL_BOOL: types.BooleanType,
-    GL.GL_INT: types.IntType,
-    GL.GL_FLOAT: types.FloatType,
+    GL.GL_BOOL: bool, #types.BooleanType,
+    GL.GL_INT: int, #types.IntType,
+    GL.GL_FLOAT: float, #types.FloatType,
 }
 
 _pytypes_to_gltypes = reversedict(_gltypes_to_pytypes)

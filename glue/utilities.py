@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
+import functools as ft
 import itertools as it
 
 import six
@@ -11,7 +12,7 @@ def compose2(f, g):
     return lambda *args, **kwargs: f(g(*args, **kwargs))
 
 def compose(*fs):
-    return reduce(compose2, fs)
+    return ft.reduce(compose2, fs)
 
 def nth(iterable, n, default=None):
     return next(it.islice(iterable, n, None), default)
