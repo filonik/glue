@@ -63,7 +63,7 @@ class Resource(object):
         super(Resource, self).__init__()#(*args, **kwargs)
     
     def __nonzero__(self):
-        return self._handle != self._zero_handle
+        return bool(self._handle != self._zero_handle)
     
     __bool__ = __nonzero__
     
