@@ -101,7 +101,7 @@ def vertex_attribute_enabler(gltype, normalized=False, divisor=None):
         size = 1
         def enable_vertex_attrib_scalar(location, stride=gltype.stride, offset=gltype.offset):
             GL.glEnableVertexAttribArray(location)
-            func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
+            func(location, size, gltype.type, stride, ctypes.c_void_p(int(offset)))
             if divisor is not None:
                 GL.glVertexAttribDivisor(location, divisor)
         return enable_vertex_attrib_scalar
@@ -109,7 +109,7 @@ def vertex_attribute_enabler(gltype, normalized=False, divisor=None):
         size = gltype.dtype.sizes[0]
         def enable_vertex_attrib_vector(location, stride=gltype.stride, offset=gltype.offset):
             GL.glEnableVertexAttribArray(location)
-            func(location, size, gltype.type, stride, ctypes.c_void_p(offset))
+            func(location, size, gltype.type, stride, ctypes.c_void_p(int(offset)))
             if divisor is not None:
                 GL.glVertexAttribDivisor(location, divisor)
         return enable_vertex_attrib_vector
@@ -118,7 +118,7 @@ def vertex_attribute_enabler(gltype, normalized=False, divisor=None):
         def enable_vertex_attrib_matrix(location, stride=gltype.stride, offset=gltype.offset):
             for n in range(outer_size):
                 GL.glEnableVertexAttribArray(location + n)
-                func(location + n, size, gltype.type, stride, ctypes.c_void_p(offset + inner_stride * n))
+                func(location + n, size, gltype.type, stride, ctypes.c_void_p(int(offset + inner_stride * n)))
                 if divisor is not None:
                     GL.glVertexAttribDivisor(location + n, divisor)
         return enable_vertex_attrib_matrix
