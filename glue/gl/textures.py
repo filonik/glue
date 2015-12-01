@@ -15,6 +15,25 @@ DEFAULT_TEXTURE_TYPE = GL.GL_UNSIGNED_BYTE
 DEFAULT_TEXTURE_FILTER = GL.GL_LINEAR, GL.GL_LINEAR
 DEFAULT_TEXTURE_WRAP = GL.GL_REPEAT, GL.GL_REPEAT, GL.GL_REPEAT
 
+DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT = {
+    GL.GL_RED: GL.GL_RED,
+    GL.GL_RG: GL.GL_RG,
+    GL.GL_RGB: GL.GL_RGB,
+    GL.GL_RGBA: GL.GL_RGBA,
+    GL.GL_R32F: GL.GL_RED,
+    GL.GL_RG32F: GL.GL_RG,
+    GL.GL_RGB32F: GL.GL_RGB, 
+    GL.GL_RGBA32F: GL.GL_RGBA, 
+    GL.GL_R32I: GL.GL_RED_INTEGER,
+    GL.GL_RG32I: GL.GL_RG_INTEGER,
+    GL.GL_RGB32I: GL.GL_RGB_INTEGER, 
+    GL.GL_RGBA32I: GL.GL_RGBA_INTEGER, 
+    GL.GL_R32UI: GL.GL_RED_INTEGER,
+    GL.GL_RG32UI: GL.GL_RG_INTEGER,
+    GL.GL_RGB32UI: GL.GL_RGB_INTEGER, 
+    GL.GL_RGBA32UI: GL.GL_RGBA_INTEGER,
+}
+
 TEXTURE_CUBEMAP_TARGETS = [
     GL.GL_TEXTURE_CUBE_MAP_POSITIVE_X,
     GL.GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
@@ -68,15 +87,18 @@ class Texture1D(Texture):
         GL.glFramebufferTexture1D(GL.GL_FRAMEBUFFER, attachment, cls._target, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=Unspecified):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=Unspecified, border=0, format=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
-        format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        internalFormat = getspecified(internalFormat, DEFAULT_TEXTURE_FORMAT)
+        format = getspecified(format, internalFormat)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         GL.glTexImage1D(self._target, level, internalFormat, size[0], border, format, type, image)
     
     #@classmethod
     def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,), format=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         GL.glTexSubImage1D(self._target, level, offset[0], size[0], format, type, image)
 
 class Texture2D(Texture):
@@ -87,15 +109,18 @@ class Texture2D(Texture):
         GL.glFramebufferTexture2D(GL.GL_FRAMEBUFFER, attachment, cls._target, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=Unspecified):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=Unspecified, border=0, format=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
-        format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        internalFormat = getspecified(internalFormat, DEFAULT_TEXTURE_FORMAT)
+        format = getspecified(format, internalFormat)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         GL.glTexImage2D(self._target, level, internalFormat, size[0], size[1], border, format, type, image)
     
     #@classmethod
     def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,0), format=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         GL.glTexSubImage2D(self._target, level, offset[0], offset[1], size[0], size[1], format, type, image)
 
 class Texture3D(Texture):
@@ -106,15 +131,18 @@ class Texture3D(Texture):
         GL.glFramebufferTexture3D(GL.GL_FRAMEBUFFER, attachment, cls._target, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=Unspecified):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=Unspecified, border=0, format=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
-        format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        internalFormat = getspecified(internalFormat, DEFAULT_TEXTURE_FORMAT)
+        format = getspecified(format, internalFormat)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         GL.glTexImage3D(self._target, level, internalFormat, size[0], size[1], size[2], border, format, type, image)
     
     #@classmethod
     def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,0,0), format=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         GL.glTexSubImage3D(self._target, level, offset[0], offset[1], offset[2], size[0], size[1], size[2], format, type, image)
 
 class TextureCubeMap(Texture):
@@ -125,9 +153,11 @@ class TextureCubeMap(Texture):
         GL.glFramebufferTexture(GL.GL_FRAMEBUFFER, attachment, cls.handle(obj), 0)
     
     #@classmethod
-    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=DEFAULT_TEXTURE_FORMAT, border=0, format=Unspecified, target=Unspecified):
+    def set_image(self, image, size, type=Unspecified, level=0, internalFormat=Unspecified, border=0, format=Unspecified, target=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
-        format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        internalFormat = getspecified(internalFormat, DEFAULT_TEXTURE_FORMAT)
+        format = getspecified(format, internalFormat)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         target = getspecified(target, self._target)
         GL.glTexImage2D(target, level, internalFormat, size[0], size[1], border, format, type, image)
     
@@ -135,6 +165,7 @@ class TextureCubeMap(Texture):
     def set_sub_image(self, image, size, type=Unspecified, level=0, offset=(0,0), format=Unspecified, target=Unspecified):
         type = getspecified(type, DEFAULT_TEXTURE_TYPE)
         format = getspecified(format, DEFAULT_TEXTURE_FORMAT)
+        format = DEFAULT_SIZED_FORMAT_TO_BASE_FORMAT.get(format, format)
         target = getspecified(target, self._target)
         GL.glTexSubImage2D(target, level, offset[0], offset[1], size[0], size[1], format, type, image)
 
