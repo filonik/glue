@@ -81,7 +81,7 @@ class GLArrayType(collections.namedtuple('GLArrayType', ['size', 'stride', 'offs
         if isinstance(self.dtype, dict):
             return {name: self.dtype[name].nbytes for name in self.dtype}
         import operator
-        product = reduce(operator.mul, self.sizes, 1)
+        product = ft.reduce(operator.mul, self.sizes, 1)
         return product * self.dtype.nbytes
     
     @property
