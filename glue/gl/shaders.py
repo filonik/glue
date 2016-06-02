@@ -70,6 +70,27 @@ class FragmentShader(Shader):
     _type = GL.GL_FRAGMENT_SHADER
 
 class Program(resources.GLResource):
+    class Stage(object):
+        def __init__(self, program, shader_type):
+            self.program = program
+            self.shader_type = shader_type
+        
+        @property
+        def active_subroutine_uniform_locations(self):
+            return GL.glGetProgramStageiv(self.program._handle, self.shader_type, GL.GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS)
+        
+        @indexedproperty
+        def active_subroutine_uniform_name(self, key):
+            return raw.glGetActiveSubroutineUniformName(self.program._handle, self.shader_type, key)
+        
+        @indexedproperty
+        def active_subroutine_name(self, key):
+            return raw.glGetActiveSubroutineName(self.program._handle, self.shader_type, key)
+        
+        @indexedproperty
+        def subroutine_indices(self, key):
+            return self.program.subroutine_indices[self.shader_type, key]
+    
     @classmethod
     def bind(cls, obj):
         GL.glUseProgram(cls.handle(obj))
@@ -99,6 +120,10 @@ class Program(resources.GLResource):
         
         self._subroutine_index_cache = {}
         self._subroutine_location_cache = {}
+    
+    @indexedproperty
+    def stage(self, shader_type):
+        return Program.Stage(self, shader_type)
     
     @indexedproperty
     def transform_feedback_varyings(self, key):

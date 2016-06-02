@@ -7,11 +7,21 @@ from OpenGL import GL, arrays
 
 # Functions that are not wrapped nicely in PyOpenGL yet.
 
-def glTransformFeedbackVaryings(program, varyings, buffer_mode):
-    #TODO: Handle multiple strings...
-    buffer = ctypes.create_string_buffer(varyings[0])
+def glGetActiveSubroutineName(program,  shadertype , index):
+    bufsize = 1024
+    buffer = ctypes.create_string_buffer(bufsize)
     c_text = ctypes.cast(ctypes.pointer(ctypes.pointer(buffer)), ctypes.POINTER(ctypes.POINTER(GL.GLchar)))
-    GL.glTransformFeedbackVaryings(program, 1, c_text, buffer_mode)
+    length = arrays.GLintArray.zeros((1,))
+    GL.glGetActiveSubroutineName(program, shadertype, index, bufsize, length, buffer)
+    return buffer.raw[:length]
+
+def glGetActiveSubroutineUniformName(program,  shadertype , index):
+    bufsize = 1024
+    buffer = ctypes.create_string_buffer(bufsize)
+    c_text = ctypes.cast(ctypes.pointer(ctypes.pointer(buffer)), ctypes.POINTER(ctypes.POINTER(GL.GLchar)))
+    length = arrays.GLintArray.zeros((1,))
+    GL.glGetActiveSubroutineUniformName(program, shadertype, index, bufsize, length, buffer)
+    return buffer.raw[:length]
 
 def glGetProgramInterfaceiv(program, programInterface, pname):
     params = arrays.GLintArray.zeros((1,))
@@ -32,3 +42,9 @@ def glGetProgramResourceName(program, programInterface, index):
     name = ctypes.create_string_buffer(bufSize)
     GL.glGetProgramResourceName(program, programInterface, index, bufSize, length, name)
     return name.value
+
+def glTransformFeedbackVaryings(program, varyings, buffer_mode):
+    #TODO: Handle multiple strings...
+    buffer = ctypes.create_string_buffer(varyings[0])
+    c_text = ctypes.cast(ctypes.pointer(ctypes.pointer(buffer)), ctypes.POINTER(ctypes.POINTER(GL.GLchar)))
+    GL.glTransformFeedbackVaryings(program, 1, c_text, buffer_mode)
