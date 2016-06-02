@@ -76,6 +76,10 @@ class Program(resources.GLResource):
             self.shader_type = shader_type
         
         @property
+        def active_subroutine_uniforms(self):
+            return GL.glGetProgramStageiv(self.program._handle, self.shader_type, GL.GL_ACTIVE_SUBROUTINE_UNIFORMS)
+        
+        @property
         def active_subroutine_uniform_locations(self):
             return GL.glGetProgramStageiv(self.program._handle, self.shader_type, GL.GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS)
         
@@ -90,6 +94,10 @@ class Program(resources.GLResource):
         @indexedproperty
         def subroutine_indices(self, key):
             return self.program.subroutine_indices[self.shader_type, key]
+        
+        @indexedproperty
+        def compatible_subroutines(self, key):
+            return raw.getCompatibleSubroutines(self.program._handle, self.shader_type, key)
     
     @classmethod
     def bind(cls, obj):

@@ -7,20 +7,26 @@ from OpenGL import GL, arrays
 
 # Functions that are not wrapped nicely in PyOpenGL yet.
 
-def glGetActiveSubroutineName(program,  shadertype , index):
+def getCompatibleSubroutines(program, shader_type, uniform_subroutine):
+    count = GL.glGetActiveSubroutineUniformiv(program, shader_type, uniform_subroutine, GL.GL_NUM_COMPATIBLE_SUBROUTINES)
+    buffer = arrays.GLintArray.zeros((count,))
+    GL.glGetActiveSubroutineUniformiv(program, shader_type, uniform_subroutine, GL.GL_COMPATIBLE_SUBROUTINES, buffer)
+    return buffer
+
+def glGetActiveSubroutineName(program, shader_type, index):
     bufsize = 1024
     buffer = ctypes.create_string_buffer(bufsize)
     c_text = ctypes.cast(ctypes.pointer(ctypes.pointer(buffer)), ctypes.POINTER(ctypes.POINTER(GL.GLchar)))
     length = arrays.GLintArray.zeros((1,))
-    GL.glGetActiveSubroutineName(program, shadertype, index, bufsize, length, buffer)
+    GL.glGetActiveSubroutineName(program, shader_type, index, bufsize, length, buffer)
     return buffer.raw[:length]
 
-def glGetActiveSubroutineUniformName(program,  shadertype , index):
+def glGetActiveSubroutineUniformName(program, shader_type, index):
     bufsize = 1024
     buffer = ctypes.create_string_buffer(bufsize)
     c_text = ctypes.cast(ctypes.pointer(ctypes.pointer(buffer)), ctypes.POINTER(ctypes.POINTER(GL.GLchar)))
     length = arrays.GLintArray.zeros((1,))
-    GL.glGetActiveSubroutineUniformName(program, shadertype, index, bufsize, length, buffer)
+    GL.glGetActiveSubroutineUniformName(program, shader_type, index, bufsize, length, buffer)
     return buffer.raw[:length]
 
 def glGetProgramInterfaceiv(program, programInterface, pname):
