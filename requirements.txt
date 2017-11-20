@@ -1,6 +1,3 @@
 numpy
-PIL
 PyOpenGL
-six
--e git://github.com/filonik/clibs.git#egg=clibs
-
+pillow
