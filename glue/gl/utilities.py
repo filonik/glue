@@ -65,7 +65,29 @@ def load_source(path):
     return result
 
 
-def create_shader(path, type=None):
+class Inputs(object):
+    def __init__(self, program, inputs):
+        self._setters = {key: input_setter(program, key, type) for key, type in inputs.items()}
+    
+    def set(self, key, value, *args, **kwargs):
+        self._setters[key](value, *args, **kwargs)
+        
+    def __setitem__(self, key, value):
+        self.set(key, value)
+
+
+class Uniforms(object):
+    def __init__(self, program, uniforms):
+        self._setters = {key: uniform_setter(program, key, type) for key, type in uniforms.items()}
+        
+    def set(self, key, value, *args, **kwargs):
+        self._setters[key](value, *args, **kwargs)
+        
+    def __setitem__(self, key, value):
+        self.set(key, value)
+
+
+def load_shader(path, type=None):
     class ShaderData(object):
         pass
     
@@ -90,11 +112,13 @@ def create_shader(path, type=None):
     return result
 
 
-def create_program(shaders, inputs=None, uniforms=None):
+def load_program(shaders, inputs=None, uniforms=None):
     inputs = {} if inputs is None else inputs
     uniforms = {} if uniforms is None else uniforms
     
     result = Program().create()
+    
+    shaders = [load_shader(shader) for shader in shaders]
     
     for shader in shaders:
         result.attach(shader)
@@ -107,17 +131,17 @@ def create_program(shaders, inputs=None, uniforms=None):
     if result.link_status != 1:
         raise Exception("Program Link Error:\n%s" % (result.info_log,))
     
-    result.inputs = {key: input_setter(result, key, type) for key, type in inputs.items()}
-    result.uniforms = {key: uniform_setter(result, key, type) for key, type in uniforms.items()}
+    result.inputs = Inputs(result, inputs)
+    result.uniforms = Uniforms(result, uniforms)
     
     return result
 
 
-def create_texture(path, type=None):
+def load_texture(path, type=None):
     class TextureData(object):
         pass
     
-    def _image_loader(path, *args, **kwargs):
+    def _texture_loader(path, *args, **kwargs):
         import PIL.Image
         img = PIL.Image.open(path)
         
@@ -131,7 +155,7 @@ def create_texture(path, type=None):
     
     type = texture_type_from_path(path) if type is None else type
     
-    data = _image_loader(path)
+    data = _texture_loader(path)
     
     result = Texture.from_type(type).create()
     
