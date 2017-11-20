@@ -54,7 +54,7 @@ def load_source(path):
         basepath = os.path.dirname(path)
         with open(path, "r") as f: 
             for line in f.readlines():
-                if line.startswith("#include"):
+                if line.strip().startswith("#include"):
                     subpath = os.path.join(basepath, _get_include_path(line))
                     yield from _load_source(subpath)
                 else:
