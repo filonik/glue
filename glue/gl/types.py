@@ -1,0 +1,48 @@
+import OpenGL
+from OpenGL import GL
+
+
+ScalarType = (GL.GL_FLOAT, GL.GL_FLOAT, ())
+
+Vec2Type = (GL.GL_FLOAT_VEC2, GL.GL_FLOAT, (2,))
+Vec3Type = (GL.GL_FLOAT_VEC3, GL.GL_FLOAT, (3,))
+Vec4Type = (GL.GL_FLOAT_VEC4, GL.GL_FLOAT, (4,))
+
+Mat2Type = (GL.GL_FLOAT_MAT2, GL.GL_FLOAT, (2, 2))
+Mat3Type = (GL.GL_FLOAT_MAT3, GL.GL_FLOAT, (3, 3))
+Mat4Type = (GL.GL_FLOAT_MAT4, GL.GL_FLOAT, (4, 4))
+
+Mat2x3Type = (GL.GL_FLOAT_MAT2x3, GL.GL_FLOAT, (2, 3))
+Mat2x4Type = (GL.GL_FLOAT_MAT2x4, GL.GL_FLOAT, (2, 4))
+Mat3x2Type = (GL.GL_FLOAT_MAT3x2, GL.GL_FLOAT, (3, 2))
+Mat3x4Type = (GL.GL_FLOAT_MAT3x4, GL.GL_FLOAT, (3, 4))
+Mat4x2Type = (GL.GL_FLOAT_MAT4x2, GL.GL_FLOAT, (4, 2))
+Mat4x3Type = (GL.GL_FLOAT_MAT4x3, GL.GL_FLOAT, (4, 3))
+
+
+BScalarType = (GL.GL_BOOL, GL.GL_BOOL, ())
+
+BVec2Type = (GL.GL_BOOL_VEC2, GL.GL_BOOL, (2,))
+BVec3Type = (GL.GL_BOOL_VEC3, GL.GL_BOOL, (3,))
+BVec4Type = (GL.GL_BOOL_VEC4, GL.GL_BOOL, (4,))
+
+
+IScalarType = (GL.GL_INT, GL.GL_INT, ())
+
+IVec2Type = (GL.GL_INT_VEC2, GL.GL_INT, (2,))
+IVec3Type = (GL.GL_INT_VEC3, GL.GL_INT, (3,))
+IVec4Type = (GL.GL_INT_VEC4, GL.GL_INT, (4,))
+
+
+UScalarType = (GL.GL_UNSIGNED_INT, GL.GL_UNSIGNED_INT, ())
+
+UVec2Type = (GL.GL_UNSIGNED_INT_VEC2, GL.GL_UNSIGNED_INT, (2,))
+UVec3Type = (GL.GL_UNSIGNED_INT_VEC3, GL.GL_UNSIGNED_INT, (3,))
+UVec4Type = (GL.GL_UNSIGNED_INT_VEC4, GL.GL_UNSIGNED_INT, (4,))
+
+
+Sampler1DType = (GL.GL_SAMPLER_1D, GL.GL_INT, ())
+Sampler2DType = (GL.GL_SAMPLER_2D, GL.GL_INT, ())
+Sampler3DType = (GL.GL_SAMPLER_3D, GL.GL_INT, ())
+
+SamplerCubeType = (GL.GL_SAMPLER_CUBE, GL.GL_INT, ())
