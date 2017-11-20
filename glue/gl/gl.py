@@ -3,7 +3,7 @@ import contextlib as cl
 import OpenGL
 from OpenGL import GL
 
-from encore import accessors
+from .. import accessors
 
 from .handles import scoped, bound, mapped
 from .types import *

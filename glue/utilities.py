@@ -30,3 +30,27 @@ class UniversalMethodMeta(type):
         result.__init__ = new_init
 
         return result
+
+
+def identity(obj):
+    return obj
+
+
+def compose(*funcs):
+    def _compose(f, g):
+        return lambda *args, **kwargs: f(g(*args, **kwargs))
+    return ft.reduce(_compose, funcs, identity)
+
+
+def unique_instance(name, truth=True):
+    cls = type(name, (object,), {'__bool__': lambda self: truth, '__repr__': lambda self: name, '__str__': lambda self: name})
+    return cls()
+
+
+Unspecified = unique_instance("Unspecified", False)
+
+def specified(obj):
+    return obj is not Unspecified
+
+def getspecified(obj, default=None):
+    return obj if specified(obj) else default
